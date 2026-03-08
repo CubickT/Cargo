@@ -9,15 +9,17 @@ public class PolygonShape implements GeometricShape {
 
     GeometryFactory factory = new GeometryFactory();
 
-    double[][] points;
+    double[][] inputPoints;
+    Point[] points;
     Coordinate[] coords;
     LinearRing ring;
     Polygon poly;
 
     public PolygonShape(double[][] pointsIn) {
 
-        this.points = pointsIn;
-        this.coords = toCoordinates(points);
+        this.inputPoints = pointsIn;
+        this.coords = toCoordinates(inputPoints);
+        this.points = toPoints(coords);
         this.ring = factory.createLinearRing(coords);
         this.poly = factory.createPolygon(ring);
 
@@ -26,5 +28,10 @@ public class PolygonShape implements GeometricShape {
     @Override
     public Polygon getPoly() {
         return this.poly;
+    }
+
+    @Override
+    public Coordinate[] getCoords(){
+        return this.coords;
     }
 }
