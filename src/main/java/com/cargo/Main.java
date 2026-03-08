@@ -17,13 +17,14 @@ public class Main {
         System.out.println("JTS работает! Фабрика создана: " + factory);
 
         double[][] boundsIn = {{0, 230}, {325, 230}, {325, 0}, {2925, 0}, {2925, 230}, {3250, 230}, {3250, 3770}, {2245, 5070}, {1005, 5070}, {0, 3770}};
-        double[][] cargoIn = {{300, 300}, {4000, 300}, {3000, 3000}, {300, 3000}};
+        double[][] cargoIn = {{300, 300}, {3000, 300}, {3000, 3000}, {300, 3000}};
 
         PolygonShape bounds = new PolygonShape(boundsIn);
         PolygonShape cargo = new PolygonShape(cargoIn);
 
         Polygon boundsPoly = bounds.getPoly();
         Polygon cargoPoly = cargo.getPoly();
+        Coordinate[][] gapPoints = gapPoints(cargo.getCoords(), boundsPoly);
 
         if (boundsPoly.contains(cargoPoly)) {
             System.out.println("Объект входит в габарит");
@@ -31,9 +32,9 @@ public class Main {
             System.err.println("Объект НЕ входит в габарит");
         }
 
-        System.out.println(Arrays.deepToString(gapPoints(cargo.getCoords(), boundsPoly)));
+        System.out.println(Arrays.deepToString(gapPoints));
 
-        MainFrame frame = new MainFrame(boundsPoly, cargoPoly);
+        MainFrame frame = new MainFrame(boundsPoly, cargoPoly,gapPoints);
         frame.setVisible(true);
 
     }
