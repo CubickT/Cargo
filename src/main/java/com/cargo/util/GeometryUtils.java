@@ -29,9 +29,20 @@ public class GeometryUtils {
         return points;
     }
 
-    public static Coordinate[][] gapPoints(Coordinate[] coords, Polygon boundsPoly) {
+    public static Point[][] toPoints(Coordinate[][] coords) {
 
-        Coordinate[][] gapPoints = new Coordinate[coords.length][2];
+
+        Point[][] points = new Point[coords.length + 1][2];
+        for (int i = 0; i < coords.length; i++) {
+            points[i][0] = factory.createPoint(coords[i][0]);
+            points[i][1] = factory.createPoint(coords[i][1]);
+        }
+        return points;
+    }
+
+    public static Coordinate[][] gapCoords(Coordinate[] coords, Polygon boundsPoly) {
+
+        Coordinate[][] gapCoords = new Coordinate[coords.length][2];
 
         double DELTA = 30;
 
@@ -74,7 +85,7 @@ public class GeometryUtils {
                     }
 
                 }
-                gapPoints[i][0] = best;
+                gapCoords[i][0] = best;
             }
             if (intersectionsV.length > 0) {
                 Coordinate best = null;
@@ -89,12 +100,12 @@ public class GeometryUtils {
                     }
 
                 }
-                gapPoints[i][1] = best;
+                gapCoords[i][1] = best;
             }
 
         }
 
-        return gapPoints;
+        return gapCoords;
     }
 
 }
