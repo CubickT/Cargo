@@ -15,12 +15,12 @@ public class DrawPanel extends JPanel {
 
     private final Polygon cargoPoly;
     private final Polygon boundsPoly;
-    private final Coordinate[][] gapPoints;
+    private final Coordinate[][] gapCoords;
 
-    public DrawPanel(Polygon boundsPoly, Polygon cargoPoly, Coordinate[][] gapPoints) {
+    public DrawPanel(Polygon boundsPoly, Polygon cargoPoly, Coordinate[][] gapCoords) {
         this.boundsPoly = boundsPoly;
         this.cargoPoly = cargoPoly;
-        this.gapPoints = gapPoints;
+        this.gapCoords = gapCoords;
     }
 
     @Override
@@ -42,9 +42,9 @@ public class DrawPanel extends JPanel {
         double offsetY = PADDING + (panelHeight - 2 * PADDING - envelope.getHeight() * scale) / 2;
 
 
-        drawPolygon(g2d, boundsPoly, Color.BLUE, envelope, scale, offsetX, offsetY);
+        drawPolygon(g2d,boundsPoly, Color.BLUE, envelope, scale, offsetX, offsetY);
         drawPolygon(g2d, cargoPoly, Color.BLACK, envelope, scale, offsetX, offsetY);
-        drawLines(g2d, gapPoints, cargoPoly, Color.RED, envelope, scale, offsetX, offsetY);
+        drawLines(g2d, Color.RED, envelope, scale, offsetX, offsetY);
     }
 
 
@@ -72,10 +72,10 @@ public class DrawPanel extends JPanel {
         g2d.drawPolygon(xPoints, yPoints, n);
     }
 
-    private void drawLines(Graphics2D g2d, Coordinate[][] gapCoords, Polygon poly, Color color, Envelope envelope, double scale, double offX, double offY) {
+    private void drawLines(Graphics2D g2d, Color color, Envelope envelope, double scale, double offX, double offY) {
         g2d.setColor(color);
 
-        Coordinate[] coords = coordsOut(poly.getCoordinates(), boundsPoly);
+        Coordinate[] coords = coordsOut(cargoPoly.getCoordinates(), boundsPoly);
 
         for (int i = 0; i < gapCoords.length; i++) {
             if (coords[i] != null) {
