@@ -1,6 +1,10 @@
 package com.cargo.util;
 
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.Polygon;
+
+import java.awt.*;
 
 import static java.lang.Math.abs;
 
@@ -106,6 +110,37 @@ public class GeometryUtils {
         }
 
         return gapCoords;
+    }
+
+    public static Coordinate[] coordsOut(Coordinate[] coordsIn,Polygon boundsPoly){
+        Point[] points = toPoints(coordsIn);
+        Coordinate[] coordsOut = new Coordinate[coordsIn.length];
+
+        for(int i = 0; i < points.length; i++){
+            if(points[i] != null && coordsIn[i] != null &&!boundsPoly.contains(points[i])){
+                coordsOut[i] = new Coordinate(coordsIn[i].x,coordsIn[i].y);
+            }
+        }
+        return  coordsOut;
+
+    }
+
+    public static Coordinate[][] coordsOut(Coordinate[][] coordsIn, Polygon boundsPoly) {
+
+        Point[][] points = toPoints(coordsIn);
+        Coordinate[][] coordsOut = new Coordinate[coordsIn.length][2];
+
+        for (int i = 0; i < points.length; i++) {
+
+
+            for (int j = 0; j < points[i].length; j++) {
+
+                if (points[i][j] != null && coordsIn[i][j] != null && !boundsPoly.contains(points[i][j])) {
+                    coordsOut[i][j] = new Coordinate(coordsIn[i][j].x, coordsIn[i][j].y);
+                }
+            }
+        }
+        return coordsOut;
     }
 
 }
