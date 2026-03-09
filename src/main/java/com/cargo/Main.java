@@ -29,15 +29,17 @@ public class Main {
         Polygon cargoPoly = cargo.getPoly();
         Coordinate[][] gapCoords = gapCoords(cargo.getCoords(), boundsPoly);
 
+        String info = "";
+
         if (boundsPoly.contains(cargoPoly)) {
-            System.out.println("Объект входит в габарит");
+            info += "Объект входит в габарит";
         } else {
-            System.err.println("Объект НЕ входит в габарит");
+            info +="Объект не входит в габарит";
         }
 
         System.out.println(Arrays.deepToString(gapCoords));
 
-        MainFrame frame = new MainFrame(boundsPoly, cargoPoly,gapCoords);
+        MainFrame frame = new MainFrame(boundsPoly, cargoPoly,gapCoords, info);
         frame.setVisible(true);
 
     }
