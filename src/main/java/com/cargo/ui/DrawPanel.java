@@ -7,6 +7,8 @@ import org.locationtech.jts.geom.Polygon;
 import javax.swing.*;
 import java.awt.*;
 
+import static com.cargo.util.GeometryUtils.coordsOut;
+
 public class DrawPanel extends JPanel {
 
     static double PADDING = 30;
@@ -42,7 +44,7 @@ public class DrawPanel extends JPanel {
 
         drawPolygon(g2d, boundsPoly, Color.BLUE, envelope, scale, offsetX, offsetY);
         drawPolygon(g2d, cargoPoly, Color.BLACK, envelope, scale, offsetX, offsetY);
-        drawLines(g2d, gapPoints, cargoPoly, Color.RED, envelope,scale,offsetX,offsetY);
+        drawLines(g2d, gapPoints, cargoPoly, Color.RED, envelope, scale, offsetX, offsetY);
     }
 
 
@@ -70,24 +72,25 @@ public class DrawPanel extends JPanel {
         g2d.drawPolygon(xPoints, yPoints, n);
     }
 
-    private void drawLines(Graphics2D g2d, Coordinate[][] gapPoints,Polygon poly, Color color, Envelope envelope, double scale, double offX, double offY) {
+    private void drawLines(Graphics2D g2d, Coordinate[][] gapCoords, Polygon poly, Color color, Envelope envelope, double scale, double offX, double offY) {
         g2d.setColor(color);
 
-        Coordinate[] coords = poly.getCoordinates();
+        Coordinate[] coords = coordsOut(poly.getCoordinates(), boundsPoly);
 
-        for(int i = 0; i< gapPoints.length; i++){
-            Point start = worldToScreen(coords[i],envelope,scale,offX,offY);
+        for (int i = 0; i < gapCoords.length; i++) {
+            if (coords[i] != null) {
+                Point start = worldToScreen(coords[i], envelope, scale, offX, offY);
 
-            if (gapPoints[i][0] != null) {
-                Point endX = worldToScreen(gapPoints[i][0], envelope, scale, offX, offY);
-                g2d.drawLine(start.x, start.y, endX.x, endX.y);
+                if (gapCoords[i][0] != null) {
+                    Point endX = worldToScreen(gapCoords[i][0], envelope, scale, offX, offY);
+                    g2d.drawLine(start.x, start.y, endX.x, endX.y);
+                }
+
+                if (gapCoords[i][1] != null) {
+                    Point endY = worldToScreen(gapCoords[i][1], envelope, scale, offX, offY);
+                    g2d.drawLine(start.x, start.y, endY.x, endY.y);
+                }
             }
-
-            if (gapPoints[i][1] != null) {
-                Point endY = worldToScreen(gapPoints[i][1], envelope, scale, offX, offY);
-                g2d.drawLine(start.x, start.y, endY.x, endY.y);
-            }
-
         }
     }
 }
