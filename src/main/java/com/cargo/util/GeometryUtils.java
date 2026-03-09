@@ -1,10 +1,12 @@
 package com.cargo.util;
 
+import com.cargo.model.ZoneShape;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Math.abs;
 
@@ -112,16 +114,16 @@ public class GeometryUtils {
         return gapCoords;
     }
 
-    public static Coordinate[] coordsOut(Coordinate[] coordsIn,Polygon boundsPoly){
+    public static Coordinate[] coordsOut(Coordinate[] coordsIn, Polygon boundsPoly) {
         Point[] points = toPoints(coordsIn);
         Coordinate[] coordsOut = new Coordinate[coordsIn.length];
 
-        for(int i = 0; i < points.length; i++){
-            if(points[i] != null && coordsIn[i] != null &&!boundsPoly.contains(points[i])){
-                coordsOut[i] = new Coordinate(coordsIn[i].x,coordsIn[i].y);
+        for (int i = 0; i < points.length; i++) {
+            if (points[i] != null && coordsIn[i] != null && !boundsPoly.contains(points[i])) {
+                coordsOut[i] = new Coordinate(coordsIn[i].x, coordsIn[i].y);
             }
         }
-        return  coordsOut;
+        return coordsOut;
 
     }
 
@@ -141,6 +143,25 @@ public class GeometryUtils {
             }
         }
         return coordsOut;
+    }
+
+    public static ZoneShape[] arrayZoneCreation(ArrayList<ArrayList<Coordinate[]>> outerList) {
+
+        List<ZoneShape> resultList = new ArrayList<>();
+
+        for (int i = 0; i < outerList.size(); i++) {
+            ArrayList<Coordinate[]> innerList = outerList.get(i);
+
+            for (int j = 0; j < innerList.size(); j++) {
+                Coordinate[] coordArray = innerList.get(j);
+
+                ZoneShape shape = new ZoneShape(coordArray, i, j);
+                resultList.add(shape);
+            }
+        }
+
+        return resultList.toArray(new ZoneShape[0]);
+
     }
 
 }

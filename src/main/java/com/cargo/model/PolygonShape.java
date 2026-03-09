@@ -25,6 +25,9 @@ public class PolygonShape implements GeometricShape {
 
     }
 
+    public PolygonShape() {
+    }
+
     @Override
     public Polygon getPoly() {
         return this.poly;
