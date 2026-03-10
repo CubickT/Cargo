@@ -13,7 +13,6 @@ import static com.cargo.util.GeometryUtils.*;
 import static com.cargo.util.InitializationUtils.*;
 
 
-
 public class Main {
     @SuppressWarnings("unused")
     static void main(String[] args) {
@@ -23,7 +22,7 @@ public class Main {
 
 
         ZoneModel[] zones = zonesInitialization();
-        System.out.println(Arrays.toString(zones));
+//        System.out.println(Arrays.toString(zones));
 
         double[][] cargoIn = picker();
         Coordinate[] cargoCoords = toCoordinates(cargoIn);
@@ -36,20 +35,22 @@ public class Main {
         Polygon cargoPoly = cargo.getPoly();
         Coordinate[][] gapCoords = gapCoords(cargo.getCoords(), boundsPoly);
 
-        int[] result = maxDegree(degreeCalculation(cargoCoords,zones));
-        System.out.println(Arrays.toString(result));
+        int[] result = maxDegree(degreeCalculation(cargoCoords, zones));
+//        System.out.println(Arrays.toString(result));
 
         String info = "";
 
         if (boundsPoly.contains(cargoPoly)) {
             info += "Объект входит в габарит";
         } else {
-            info += "Объект не входит в габарит";
+            info += "Объект не входит в габарит. Степень - " + Arrays.toString(result);
         }
 
-        System.out.println(Arrays.deepToString(gapCoords));
+        finalCalculation(result);
 
-        MainFrame frame = new MainFrame(boundsPoly, cargoPoly, gapCoords,zones, info);
+//        System.out.println(Arrays.deepToString(gapCoords));
+
+        MainFrame frame = new MainFrame(boundsPoly, cargoPoly, gapCoords, zones, info);
         frame.setVisible(true);
 
     }
@@ -62,6 +63,7 @@ public class Main {
         System.out.println("Выберите груз");
         System.out.println("1 - Габаритный прямоугольник");
         System.out.println("2 - Негабаритный многоугольник");
+        System.out.println("3 - Груз из задачи");
 
         while (true) {
 
@@ -75,7 +77,9 @@ public class Main {
                     case 2:
                         cargoIn = new double[][]{{0, 1000}, {1800, 1500}, {1800, 3000}, {500, 3000}, {500, 4000}, {-500, 4000}, {-500, 3000}, {-1800, 3000}, {-1800, 1500}, {0, 1000}};
                         break;
-
+                    case 3:
+                        cargoIn = new double[][]{{-2100, 1500}, {2100, 1500}, {2100, 2500}, {-2100, 2500}};
+                        break;
                     default:
                         System.out.println("Неверный номер. Введите число от 1 до 2");
                         continue;
@@ -92,7 +96,6 @@ public class Main {
         return cargoIn;
 
     }
-
 
 
 }

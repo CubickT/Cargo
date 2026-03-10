@@ -1,11 +1,13 @@
 package com.cargo.util;
 
+import com.cargo.DegreesH;
 import com.cargo.model.ZoneModel;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Math.abs;
@@ -206,6 +208,69 @@ public class GeometryUtils {
 
         }
         return new int[]{maxH, maxV};
+    }
+
+    public static void finalCalculation(int[] maxDegree) {
+
+        DegreesH degreeH = DegreesH.fromCode(maxDegree[0]);
+        int code = degreeH.getCode();
+        double width = degreeH.getSize();
+        double height = degreeH.getHeight();
+
+        System.out.println("Степень - " + code);
+        System.out.println("Полуширина - " + width);  //2240
+        System.out.println("Высота - " + height);     //2800
+
+        double radius = 400;
+        double elevationOuter = 60;
+
+        double innerDist = 2500;
+        double outerDist = 2300;
+
+        double[] innerDX = {150, 140, 135, 125, 95};
+        double[] outerDX = {170, 150, 145, 135, 105};
+
+        double wagonOutage = 36000 / radius;
+
+        double innerXOffset = wagonOutage + height * (elevationOuter / 1600);
+        double outerXOffset = wagonOutage - height * (elevationOuter / 1600);
+
+        System.out.println("Внутреннее доп. смещение X - " + innerXOffset);
+        System.out.println("Наружнее доп. смещение X - " + outerXOffset);
+
+
+        double[] minInner = new double[innerDX.length];
+        double[] minOuter = new double[outerDX.length];
+
+        for (int i = 0; i < innerDX.length; i++) {
+            minInner[i] = width + innerDX[i] + innerXOffset;
+        }
+        for (int i = 0; i < outerDX.length; i++) {
+            minOuter[i] = width + outerDX[i] + outerXOffset;
+        }
+
+        System.out.println("Внутренние " + Arrays.toString(minInner));
+        System.out.println("Наружные " + Arrays.toString(minOuter));
+
+        int possibleMode = 0;
+
+        for (int i = minInner.length - 1; i >= 0; i--) {
+
+            if (minInner[i] < innerDist) {
+                
+                for (int j = minOuter.length - 1; j >= 0; j--) {
+
+                    if (minOuter[j] < outerDist) {
+                        possibleMode = i;
+                        break;
+                    }
+
+                }
+
+            }
+        }
+        System.out.println("Допустимый режим хода - " + possibleMode);
+
     }
 
 
