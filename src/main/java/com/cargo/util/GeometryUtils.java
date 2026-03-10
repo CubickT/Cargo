@@ -1,6 +1,6 @@
 package com.cargo.util;
 
-import com.cargo.model.ZoneShape;
+import com.cargo.model.ZoneModel;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
@@ -145,9 +145,9 @@ public class GeometryUtils {
         return coordsOut;
     }
 
-    public static ZoneShape[] arrayZoneCreation(ArrayList<ArrayList<Coordinate[]>> outerList) {
+    public static ZoneModel[] arrayZoneCreation(ArrayList<ArrayList<Coordinate[]>> outerList) {
 
-        List<ZoneShape> resultList = new ArrayList<>();
+        List<ZoneModel> resultList = new ArrayList<>();
 
         for (int i = 0; i < outerList.size(); i++) {
             ArrayList<Coordinate[]> innerList = outerList.get(i);
@@ -155,12 +155,12 @@ public class GeometryUtils {
             for (int j = 0; j < innerList.size(); j++) {
                 Coordinate[] coordArray = innerList.get(j);
 
-                ZoneShape shape = new ZoneShape(coordArray, i, j);
+                ZoneModel shape = new ZoneModel(coordArray, i, j);
                 resultList.add(shape);
             }
         }
 
-        return resultList.toArray(new ZoneShape[0]);
+        return resultList.toArray(new ZoneModel[0]);
 
     }
 

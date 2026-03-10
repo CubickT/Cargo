@@ -4,12 +4,12 @@ import org.locationtech.jts.geom.Coordinate;
 
 import static com.cargo.util.GeometryUtils.toPoints;
 
-public class ZoneShape extends PolygonShape{
+public class ZoneModel extends ShapeModel {
 
     int zone;
     int degree;
 
-    public ZoneShape(Coordinate[] coordsIn, int zone,int degree){
+    public ZoneModel(Coordinate[] coordsIn, int zone, int degree){
 
         this.coords = coordsIn;
         this.points = toPoints(coords);

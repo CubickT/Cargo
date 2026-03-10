@@ -5,7 +5,7 @@ import org.locationtech.jts.geom.*;
 
 import static com.cargo.util.GeometryUtils.*;
 
-public class PolygonShape implements GeometricShape {
+public class ShapeModel implements GeometricShape {
 
     GeometryFactory factory = new GeometryFactory();
 
@@ -15,7 +15,7 @@ public class PolygonShape implements GeometricShape {
     LinearRing ring;
     Polygon poly;
 
-    public PolygonShape(double[][] pointsIn) {
+    public ShapeModel(double[][] pointsIn) {
 
         this.inputPoints = pointsIn;
         this.coords = toCoordinates(inputPoints);
@@ -25,7 +25,7 @@ public class PolygonShape implements GeometricShape {
 
     }
 
-    public PolygonShape() {
+    public ShapeModel() {
     }
 
     @Override

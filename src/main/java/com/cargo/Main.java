@@ -1,7 +1,7 @@
 package com.cargo;
 
-import com.cargo.model.PolygonShape;
-import com.cargo.model.ZoneShape;
+import com.cargo.model.ShapeModel;
+import com.cargo.model.ZoneModel;
 import com.cargo.ui.MainFrame;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Polygon;
@@ -27,14 +27,14 @@ public class Main {
         zoneList.add(bottomZone);
         zoneList.add(sideZone);
 
-        ZoneShape[] zones = arrayZoneCreation(zoneList);
+        ZoneModel[] zones = arrayZoneCreation(zoneList);
         System.out.println(Arrays.toString(zones));
 
         double[][] cargoIn = picker();
         double[][] boundsIn = {{0, 150}, {1300, 150}, {1300, 380}, {1625, 380}, {1625, 4000}, {620, 5300}, {-620, 5300}, {-1625, 4000}, {-1625, 380}, {-1300, 380}, {-1300, 150}, {0, 150}};
 
-        PolygonShape bounds = new PolygonShape(boundsIn);
-        PolygonShape cargo = new PolygonShape(cargoIn);
+        ShapeModel bounds = new ShapeModel(boundsIn);
+        ShapeModel cargo = new ShapeModel(cargoIn);
 
         Polygon boundsPoly = bounds.getPoly();
         Polygon cargoPoly = cargo.getPoly();

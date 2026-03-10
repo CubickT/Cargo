@@ -1,6 +1,6 @@
 package com.cargo.ui;
 
-import com.cargo.model.ZoneShape;
+import com.cargo.model.ZoneModel;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 
@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class MainFrame extends JFrame {
 
-    public MainFrame(Polygon bounds, Polygon cargo, Coordinate[][] gapCoords, ZoneShape[] zones, String info){
+    public MainFrame(Polygon bounds, Polygon cargo, Coordinate[][] gapCoords, ZoneModel[] zones, String info){
         setTitle("Габаритность");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(800,800);
