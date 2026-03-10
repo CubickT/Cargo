@@ -50,7 +50,7 @@ public class Main {
 
         System.out.println(Arrays.deepToString(gapCoords));
 
-        MainFrame frame = new MainFrame(boundsPoly, cargoPoly, gapCoords, info);
+        MainFrame frame = new MainFrame(boundsPoly, cargoPoly, gapCoords,zones, info);
         frame.setVisible(true);
 
     }

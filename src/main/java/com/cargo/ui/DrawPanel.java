@@ -1,5 +1,6 @@
 package com.cargo.ui;
 
+import com.cargo.model.ZoneShape;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Polygon;
@@ -16,11 +17,13 @@ public class DrawPanel extends JPanel {
     private final Polygon cargoPoly;
     private final Polygon boundsPoly;
     private final Coordinate[][] gapCoords;
+    private final ZoneShape[] zones;
 
-    public DrawPanel(Polygon boundsPoly, Polygon cargoPoly, Coordinate[][] gapCoords) {
+    public DrawPanel(Polygon boundsPoly, Polygon cargoPoly, Coordinate[][] gapCoords, ZoneShape[] zones) {
         this.boundsPoly = boundsPoly;
         this.cargoPoly = cargoPoly;
         this.gapCoords = gapCoords;
+        this.zones = zones;
     }
 
     @Override
@@ -41,8 +44,10 @@ public class DrawPanel extends JPanel {
         double offsetX = PADDING + (panelWidth - 2 * PADDING - envelope.getWidth() * scale) / 2;
         double offsetY = PADDING + (panelHeight - 2 * PADDING - envelope.getHeight() * scale) / 2;
 
-
-        drawPolygon(g2d,boundsPoly, Color.BLUE, envelope, scale, offsetX, offsetY);
+        for (ZoneShape zone : zones) {
+            drawPolygon(g2d, zone.getPoly(), Color.LIGHT_GRAY, envelope, scale, offsetX, offsetY);
+        }
+        drawPolygon(g2d, boundsPoly, Color.BLUE, envelope, scale, offsetX, offsetY);
         drawPolygon(g2d, cargoPoly, Color.BLACK, envelope, scale, offsetX, offsetY);
         drawLines(g2d, Color.RED, envelope, scale, offsetX, offsetY);
     }
