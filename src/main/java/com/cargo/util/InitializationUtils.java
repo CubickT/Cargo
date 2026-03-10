@@ -1,24 +1,54 @@
 package com.cargo.util;
 
+import com.cargo.model.ZoneModel;
 import org.locationtech.jts.geom.Coordinate;
 
 import java.util.ArrayList;
 
 public class InitializationUtils {
 
-    public static ArrayList<ArrayList<Coordinate[]>> zonesInitialization() {
-        ArrayList<ArrayList<Coordinate[]>> zoneList = new ArrayList<>(2);
-        ArrayList<Coordinate[]> bottomZone = bottomZoneListCreation();
-        ArrayList<Coordinate[]> sideZone = sideZoneListCreation();
-        ArrayList<Coordinate[]> topZone = topZoneListCreation();
+    public static ZoneModel[] zonesInitialization() {
 
-        zoneList.add(bottomZone);
-        zoneList.add(sideZone);
-        zoneList.add(topZone);
+        ArrayList<Coordinate[]> bottomZoneCoords = bottomZoneListCreation();
+        ArrayList<Coordinate[]> sideZoneCoords = sideZoneListCreation();
+        ArrayList<Coordinate[]> topZoneCoords = topZoneListCreation();
 
-        return zoneList;
+        ZoneModel[] bottomZones = zoneModelsInitialization(bottomZoneCoords,"bottom");
+        ZoneModel[] sideZones = zoneModelsInitialization(sideZoneCoords,"side");
+        ZoneModel[] topZones = zoneModelsInitialization(topZoneCoords, "top");
+
+        ZoneModel[] zones = new ZoneModel[bottomZones.length + sideZones.length + topZones.length];
+        int index = 0;
+        for (ZoneModel z : bottomZones) zones[index++] = z;
+        for (ZoneModel z : sideZones)   zones[index++] = z;
+        for (ZoneModel z : topZones)    zones[index++] = z;
+
+        return zones;
     }
 
+
+    public static ZoneModel[] zoneModelsInitialization(ArrayList<Coordinate[]> coordArray, String ZONE) {
+
+        ZoneModel[] zoneModels = new ZoneModel[coordArray.size()];
+
+
+        switch (ZONE) {
+            case "bottom":
+            case "top":
+                for (int i = 0; i < coordArray.size(); i++) {
+                    Coordinate[] coords = coordArray.get(i);
+                    zoneModels[i] = new ZoneModel(coords, 0, i);
+                }
+                break;
+            case "side":
+                for (int i = 0; i < coordArray.size(); i++) {
+                    Coordinate[] coords = coordArray.get(i);
+                    zoneModels[i] = new ZoneModel(coords, i, 0);
+                }
+                break;
+        }
+        return zoneModels;
+    }
 
     public static ArrayList<Coordinate[]> bottomZoneListCreation() {
         ArrayList<Coordinate[]> bottomZone = new ArrayList<>(6);

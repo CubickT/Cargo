@@ -6,7 +6,6 @@ import com.cargo.ui.MainFrame;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Polygon;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -22,9 +21,8 @@ public class Main {
         GeometryFactory factory = new GeometryFactory();
         System.out.println("JTS работает! Фабрика создана: " + factory);
 
-        ArrayList<ArrayList<Coordinate[]>> zoneList = zonesInitialization();
 
-        ZoneModel[] zones = arrayZoneCreation(zoneList);
+        ZoneModel[] zones = zonesInitialization();
         System.out.println(Arrays.toString(zones));
 
         double[][] cargoIn = picker();
