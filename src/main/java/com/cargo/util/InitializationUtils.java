@@ -10,9 +10,11 @@ public class InitializationUtils {
         ArrayList<ArrayList<Coordinate[]>> zoneList = new ArrayList<>(2);
         ArrayList<Coordinate[]> bottomZone = bottomZoneListCreation();
         ArrayList<Coordinate[]> sideZone = sideZoneListCreation();
+        ArrayList<Coordinate[]> topZone = topZoneListCreation();
 
         zoneList.add(bottomZone);
         zoneList.add(sideZone);
+        zoneList.add(topZone);
 
         return zoneList;
     }
@@ -26,19 +28,18 @@ public class InitializationUtils {
 
         double y0 = ys[0];
         double y1 = ys[1];
-        double y2 = ys[2];
+        double maxY = ys[2];
 
         for (int i = 0; i < xs.length - 1; i++) {
             double xLeft = xs[i];
             double xRight = xs[i + 1];
             double yLow = (i <= 1) ? y0 : y1; // первые два интервала — y0, остальные — y1
-            double yHigh = y2;
 
             Coordinate[] coords = {
                     new Coordinate(xLeft, yLow),
                     new Coordinate(xRight, yLow),
-                    new Coordinate(xRight, yHigh),
-                    new Coordinate(xLeft, yHigh),
+                    new Coordinate(xRight, maxY),
+                    new Coordinate(xLeft, maxY),
                     new Coordinate(xLeft, yLow) // замыкание
             };
 
@@ -59,7 +60,6 @@ public class InitializationUtils {
         for (int i = 0; i < xs.length - 1; i++) {
             double xLeft = xs[i];
             double xRight = xs[i + 1];
-            double yLow = minY;
             double yLeftTop, yRightTop;
 
             if (i < 3) {
@@ -71,11 +71,11 @@ public class InitializationUtils {
             }
 
             Coordinate[] coords = {
-                    new Coordinate(xLeft, yLow),       // левая нижняя
-                    new Coordinate(xRight, yLow),      // правая нижняя
+                    new Coordinate(xLeft, minY),       // левая нижняя
+                    new Coordinate(xRight, minY),      // правая нижняя
                     new Coordinate(xRight, yRightTop), // правая верхняя
                     new Coordinate(xLeft, yLeftTop),   // левая верхняя
-                    new Coordinate(xLeft, yLow)        // замыкание
+                    new Coordinate(xLeft, minY)        // замыкание
             };
 
             sideZone.add(coords);
@@ -84,6 +84,34 @@ public class InitializationUtils {
 
         return sideZone;
 
+    }
+
+    public static ArrayList<Coordinate[]> topZoneListCreation() {
+
+        ArrayList<Coordinate[]> topZone = new ArrayList<>(3);
+
+        double minY = 4000;
+        double maxY = 5300;
+        double[] bottomX = {1625, 1700, 1800, 1850};
+        double[] topX = {620, 880, 1020, 1140};
+
+        for (int i = 0; i < bottomX.length - 1; i++) {
+
+            double xLeftT = topX[i];
+            double xRightT = topX[i + 1];
+            double xLeftB = bottomX[i];
+            double xRightB = bottomX[i + 1];
+
+            Coordinate[] coords = {
+                    new Coordinate(xLeftB, minY),
+                    new Coordinate(xRightB, minY),
+                    new Coordinate(xRightT, maxY),
+                    new Coordinate(xLeftT, maxY),
+                    new Coordinate(xLeftB, minY) // замыкание
+            };
+            topZone.add(coords);
+        }
+        return topZone;
     }
 
 
