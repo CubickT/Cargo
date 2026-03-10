@@ -36,8 +36,8 @@ public class Main {
         Polygon cargoPoly = cargo.getPoly();
         Coordinate[][] gapCoords = gapCoords(cargo.getCoords(), boundsPoly);
 
-        int[][] result = degreeCalculation(cargoCoords,zones);
-        System.out.println(Arrays.deepToString(result));
+        int[] result = maxDegree(degreeCalculation(cargoCoords,zones));
+        System.out.println(Arrays.toString(result));
 
         String info = "";
 

@@ -192,5 +192,21 @@ public class GeometryUtils {
         return result;
     }
 
+    public static int[] maxDegree(int[][] array) {
+        int maxH = 0;
+        int maxV = 0;
+        for (int[] ints : array) {
+
+            if (ints[0] > maxH) {
+                maxH = ints[0];
+            }
+            if (ints[1] > maxV) {
+                maxV = ints[1];
+            }
+
+        }
+        return new int[]{maxH, maxV};
+    }
+
 
 }
