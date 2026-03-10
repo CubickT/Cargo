@@ -26,6 +26,7 @@ public class Main {
         System.out.println(Arrays.toString(zones));
 
         double[][] cargoIn = picker();
+        Coordinate[] cargoCoords = toCoordinates(cargoIn);
         double[][] boundsIn = {{0, 150}, {1300, 150}, {1300, 380}, {1625, 380}, {1625, 4000}, {620, 5300}, {-620, 5300}, {-1625, 4000}, {-1625, 380}, {-1300, 380}, {-1300, 150}, {0, 150}};
 
         ShapeModel bounds = new ShapeModel(boundsIn);
@@ -34,6 +35,9 @@ public class Main {
         Polygon boundsPoly = bounds.getPoly();
         Polygon cargoPoly = cargo.getPoly();
         Coordinate[][] gapCoords = gapCoords(cargo.getCoords(), boundsPoly);
+
+        int[][] result = degreeCalculation(cargoCoords,zones);
+        System.out.println(Arrays.deepToString(result));
 
         String info = "";
 

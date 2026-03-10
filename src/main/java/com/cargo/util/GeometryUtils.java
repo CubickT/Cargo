@@ -164,4 +164,33 @@ public class GeometryUtils {
 
     }
 
+    public static int[][] degreeCalculation(Coordinate[] coordsIn, ZoneModel[] zones) {
+
+        Point[] pointsIn = toPoints(coordsIn);
+
+        Polygon[] zonePolies = new Polygon[zones.length];
+        int[][] result = new int[coordsIn.length][2];
+
+
+        for (int i = 0; i < zones.length; i++) {
+            zonePolies[i] = zones[i].getPoly();
+        }
+
+        for (int i = 0; i < zonePolies.length; i++) {
+
+            for (int j = 0; j < coordsIn.length; j++) {
+
+                if (zonePolies[i].contains(pointsIn[j])) {
+                    result[j][0] = zones[i].getDegreeH();
+                    result[j][1] = zones[i].getDegreeV();
+                }
+
+            }
+
+        }
+
+        return result;
+    }
+
+
 }

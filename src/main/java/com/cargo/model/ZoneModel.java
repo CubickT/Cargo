@@ -6,31 +6,29 @@ import static com.cargo.util.GeometryUtils.toPoints;
 
 public class ZoneModel extends ShapeModel {
 
-    int zone;
-    int degree;
 
-    int zoneH;
-    int zoneV;
+    int degreeH;
+    int degreeV;
 
-    public ZoneModel(Coordinate[] coordsIn, int zoneH, int zoneV) {
+    public ZoneModel(Coordinate[] coordsIn, int degreeH, int degreeV) {
 
         this.coords = coordsIn;
         this.points = toPoints(coords);
         this.ring = factory.createLinearRing(coords);
         this.poly = factory.createPolygon(ring);
 
-        this.zoneH = zoneH;
-        this.zoneV = zoneV;
+        this.degreeH = degreeH;
+        this.degreeV = degreeV;
 
     }
 
     @Override
-    public int getZone() {
-        return this.zone;
+    public int getDegreeH() {
+        return degreeH;
     }
 
-    public int getDegree() {
-        return this.degree;
+    @Override
+    public int getDegreeV() {
+        return degreeV;
     }
-
 }

@@ -6,4 +6,6 @@ import org.locationtech.jts.geom.Polygon;
 public interface GeometricShape {
     Polygon getPoly();
     Coordinate[] getCoords();
+    int getDegreeH();
+    int getDegreeV();
 }

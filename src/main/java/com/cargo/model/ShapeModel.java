@@ -34,16 +34,17 @@ public class ShapeModel implements GeometricShape {
     }
 
     @Override
-    public Coordinate[] getCoords(){
+    public Coordinate[] getCoords() {
         return this.coords;
     }
 
-    public  int getZone(){
+    @Override
+    public int getDegreeH() {
         return 0;
     }
 
     @Override
-    public int getDegree() {
+    public int getDegreeV() {
         return 0;
     }
 }
