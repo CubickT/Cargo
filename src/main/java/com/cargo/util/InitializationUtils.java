@@ -52,17 +52,38 @@ public class InitializationUtils {
     public static ArrayList<Coordinate[]> sideZoneListCreation() {
         ArrayList<Coordinate[]> sideZone = new ArrayList<>(6);
 
-        Coordinate[] side1 = {
-                new Coordinate(1625, 1400),
-                new Coordinate(1700, 1400),
-                new Coordinate(1700, 4000),
-                new Coordinate(880, 5300),
-                new Coordinate(620, 5300),
-                new Coordinate(1625, 4000),
-                new Coordinate(1625, 1400)
-        };
-        sideZone.add(side1);
+        double[] xs = {1625, 1700, 1760, 1850, 2000, 2080, 2240};
+        double minY = 1400;
+        double[] ys = {4000, 3700, 3400, 2800};
+
+        for (int i = 0; i < xs.length - 1; i++) {
+            double xLeft = xs[i];
+            double xRight = xs[i + 1];
+            double yLow = minY;
+            double yLeftTop, yRightTop;
+
+            if (i < 3) {
+                yLeftTop = ys[0];
+                yRightTop = ys[0];
+            } else {
+                yLeftTop = ys[i - 3];
+                yRightTop = ys[i - 2];
+            }
+
+            Coordinate[] coords = {
+                    new Coordinate(xLeft, yLow),       // левая нижняя
+                    new Coordinate(xRight, yLow),      // правая нижняя
+                    new Coordinate(xRight, yRightTop), // правая верхняя
+                    new Coordinate(xLeft, yLeftTop),   // левая верхняя
+                    new Coordinate(xLeft, yLow)        // замыкание
+            };
+
+            sideZone.add(coords);
+
+        }
+
         return sideZone;
+
     }
 
 
