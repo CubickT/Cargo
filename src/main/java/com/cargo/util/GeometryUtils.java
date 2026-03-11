@@ -48,6 +48,19 @@ public class GeometryUtils {
         return points;
     }
 
+    public static Coordinate[] coordAbs(Coordinate[] coordsIn) {
+        Coordinate[] coordsAbs = new Coordinate[coordsIn.length];
+        Point[] points = toPoints(coordsIn);
+
+        for (int i = 0; i < coordsIn.length; i++) {
+            coordsAbs[i] = new Coordinate(
+                    abs(points[i].getX()),
+                    abs(points[i].getY())
+            );
+        }
+        return coordsAbs;
+    }
+
     public static Coordinate[][] gapCoords(Coordinate[] coords, Polygon boundsPoly) {
 
         Coordinate[][] gapCoords = new Coordinate[coords.length][2];
