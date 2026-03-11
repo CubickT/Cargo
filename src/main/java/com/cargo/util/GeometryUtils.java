@@ -1,7 +1,7 @@
 package com.cargo.util;
 
 import com.cargo.DegreesH;
-import com.cargo.model.ZoneModel;
+import com.cargo.model.*;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
@@ -179,9 +179,10 @@ public class GeometryUtils {
 
     }
 
-    public static int[][] degreeCalculation(Coordinate[] coordsIn, ZoneModel[] zones) {
+    public static int[][] degreeCalculation(Coordinate[] coordsIn, ZoneModel[] zones, ShapeModel bounds) {
 
         Point[] pointsIn = toPoints(coordsIn);
+        Polygon boundsPoly = bounds.getPoly();
 
         Polygon[] zonePolies = new Polygon[zones.length];
         int[][] result = new int[coordsIn.length][2];
@@ -191,17 +192,29 @@ public class GeometryUtils {
             zonePolies[i] = zones[i].getPoly();
         }
 
-        for (int i = 0; i < zonePolies.length; i++) {
+        for (int j = 0; j < coordsIn.length; j++) {
+            boolean foundInZone = false;
 
-            for (int j = 0; j < coordsIn.length; j++) {
 
+            for (int i = 0; i < zones.length; i++) {
                 if (zonePolies[i].contains(pointsIn[j])) {
                     result[j][0] = zones[i].getDegreeH();
                     result[j][1] = zones[i].getDegreeV();
+                    foundInZone = true;
+                    break;
                 }
-
             }
 
+            if (!foundInZone) {
+                if (boundsPoly.contains(pointsIn[j])) {
+                    result[j][0] = 0;
+                    result[j][1] = 0;
+                } else {
+
+                    result[j][0] = 7;
+                    result[j][1] = 4;
+                }
+            }
         }
 
         return result;
@@ -227,6 +240,15 @@ public class GeometryUtils {
 
         DegreesH degreeH = DegreesH.fromCode(maxDegree[0]);
         int code = degreeH.getCode();
+
+        if (code == 0) {
+            System.out.println("Груз габаритен");
+            return;
+        } else if (code == 7) {
+            System.out.println("Груз абсолютно негабаритен");
+            return;
+        }
+
         double width = degreeH.getSize();
         double height = degreeH.getHeight();
 
@@ -240,6 +262,7 @@ public class GeometryUtils {
         double innerDist = 2500;
         double outerDist = 2300;
 
+//        Минимально допустимые зазоры
         double[] innerDX = {150, 140, 135, 125, 95};
         double[] outerDX = {170, 150, 145, 135, 105};
 
@@ -264,23 +287,17 @@ public class GeometryUtils {
 
         System.out.println("Внутренние " + Arrays.toString(minInner));
         System.out.println("Наружные " + Arrays.toString(minOuter));
+        System.out.println("Внутреннее " + innerDist);
+        System.out.println("Наружнее " + outerDist);
 
         int possibleMode = 0;
 
         for (int i = minInner.length - 1; i >= 0; i--) {
 
-            if (minInner[i] < innerDist) {
-                
-                for (int j = minOuter.length - 1; j >= 0; j--) {
-
-                    if (minOuter[j] < outerDist) {
-                        possibleMode = i;
-                        break;
-                    }
-
-                }
-
+            if (minOuter[i] < outerDist && minInner[i] < innerDist) {
+                possibleMode = i + 1;
             }
+
         }
         System.out.println("Допустимый режим хода - " + possibleMode);
 
