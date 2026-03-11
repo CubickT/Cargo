@@ -30,7 +30,7 @@ public class GeometryUtils {
     public static Point[] toPoints(Coordinate[] coords) {
 
 
-        Point[] points = new Point[coords.length + 1];
+        Point[] points = new Point[coords.length];
         for (int i = 0; i < coords.length; i++) {
             points[i] = factory.createPoint(coords[i]);
         }
@@ -40,7 +40,7 @@ public class GeometryUtils {
     public static Point[][] toPoints(Coordinate[][] coords) {
 
 
-        Point[][] points = new Point[coords.length + 1][2];
+        Point[][] points = new Point[coords.length][2];
         for (int i = 0; i < coords.length; i++) {
             points[i][0] = factory.createPoint(coords[i][0]);
             points[i][1] = factory.createPoint(coords[i][1]);
