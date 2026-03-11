@@ -18,7 +18,7 @@ public class Main {
     static void main(String[] args) {
 
         GeometryFactory factory = new GeometryFactory();
-        System.out.println("JTS работает! Фабрика создана: " + factory);
+//        System.out.println("JTS работает! Фабрика создана: " + factory);
 
 
         ZoneModel[] zones = zonesInitialization();
@@ -35,7 +35,11 @@ public class Main {
         Polygon cargoPoly = cargo.getPoly();
         Coordinate[][] gapCoords = gapCoords(cargo.getCoords(), boundsPoly);
 
-        int[] result = maxDegree(degreeCalculation(cargoCoords, zones));
+        Coordinate[] coordsAbs = coordAbs(cargoCoords);
+//        System.out.println("Координаты точек - "+ Arrays.toString(cargoCoords));
+//        System.out.println("Абсолютные координаты точек - "+ Arrays.toString(coordsAbs));
+
+        int[] result = maxDegree(degreeCalculation(coordsAbs, zones, bounds));
 //        System.out.println(Arrays.toString(result));
 
         String info = "";
@@ -64,6 +68,7 @@ public class Main {
         System.out.println("1 - Габаритный прямоугольник");
         System.out.println("2 - Негабаритный многоугольник");
         System.out.println("3 - Груз из задачи");
+        System.out.println("4 - Проверка производительности");
 
         while (true) {
 
@@ -79,6 +84,9 @@ public class Main {
                         break;
                     case 3:
                         cargoIn = new double[][]{{-2100, 1500}, {2100, 1500}, {2100, 2500}, {-2100, 2500}};
+                        break;
+                    case 4:
+                        cargoIn = generateCirclePoints(2000000,1800, 3000);
                         break;
                     default:
                         System.out.println("Неверный номер. Введите число от 1 до 2");

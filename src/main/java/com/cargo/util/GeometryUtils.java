@@ -3,8 +3,6 @@ package com.cargo.util;
 import com.cargo.DegreesH;
 import com.cargo.model.*;
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.geom.Polygon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -303,5 +301,18 @@ public class GeometryUtils {
 
     }
 
+    public static double[][] generateCirclePoints(int numPoints, double radius, double yOffset) {
+        if (numPoints < 2) {
+            throw new IllegalArgumentException("numPoints должно быть не меньше 2");
+        }
+        double[][] points = new double[numPoints][2];
+        double angleStep = 2 * Math.PI / (numPoints - 1); // шаг для замыкания окружности
+        for (int i = 0; i < numPoints; i++) {
+            double angle = i * angleStep;
+            points[i][0] = radius * Math.cos(angle);          // x без смещения
+            points[i][1] = radius * Math.sin(angle) + yOffset; // y со смещением
+        }
+        return points;
 
+    }
 }
