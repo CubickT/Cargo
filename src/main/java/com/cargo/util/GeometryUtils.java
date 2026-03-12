@@ -167,10 +167,14 @@ public class GeometryUtils {
 
         double width = degreeH.getSize();
         double height = degreeH.getHeight();
+        int heighIndex = calculateHeightIndex(height);
+
 
         System.out.println("Степень - " + code);
         System.out.println("Полуширина - " + width);  //2240
         System.out.println("Высота - " + height);     //2800
+        System.out.println("Индекс высоты - " + heighIndex);
+
 
         double radius = 400;
         double elevationOuter = 60;

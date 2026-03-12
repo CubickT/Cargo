@@ -2,9 +2,127 @@
   {
     "type": "byDegree",
     "heightIndex": 1,
+    "innerDX": [80, 75, 75, 75, 55],
+    "outerDX": [100, 85, 85, 75, 65]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 2,
+    "innerDX": [85, 80, 80, 75, 60],
+    "outerDX": [100, 90, 90, 75, 70]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 3,
+    "innerDX": [90, 80, 80, 75, 60],
+    "outerDX": [100, 95, 90, 75, 70]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 4,
+    "innerDX": [90, 85, 85, 75, 60],
+    "outerDX": [110, 100, 95, 75, 70]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 5,
+    "innerDX": [120, 115, 110, 110, 90],
+    "outerDX": [140, 130, 120, 120, 100]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 6,
+    "innerDX": [125, 120, 115, 110, 90],
+    "outerDX": [145, 130, 125, 120, 100]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 7,
+    "innerDX": [130, 120, 120, 115, 90],
+    "outerDX": [150, 135, 130, 125, 100]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 8,
+    "innerDX": [135, 125, 125, 120, 95],
+    "outerDX": [155, 140, 135, 130, 105]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 9,
+    "innerDX": [140, 130, 130, 125, 95],
+    "outerDX": [160, 145, 140, 135, 105]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 10,
     "innerDX": [150, 140, 135, 125, 95],
     "outerDX": [170, 150, 145, 135, 105]
   },
+  {
+    "type": "byDegree",
+    "heightIndex": 11,
+    "innerDX": [155, 145, 140, 130, 100],
+    "outerDX": [175, 160, 150, 140, 110]
+  },
+
+  {
+    "type": "byDegree",
+    "heightIndex": 12,
+    "innerDX": [160, 150, 145, 135, 100],
+    "outerDX": [185, 165, 155, 145, 110]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 13,
+    "innerDX": [170, 155, 150, 135, 105],
+    "outerDX": [190, 170, 160, 145, 115]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 14,
+    "innerDX": [175, 160, 155, 140, 105],
+    "outerDX": [195, 175, 165, 150, 115]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 15,
+    "innerDX": [180, 165, 160, 145, 110],
+    "outerDX": [200, 175, 170, 155, 120]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 16,
+    "innerDX": [180, 165, 160, 145, 110],
+    "outerDX": [205, 180, 170, 155, 120]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 17,
+    "innerDX": [190, 170, 165, 150, 110],
+    "outerDX": [210, 185, 175, 160, 120]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 18,
+    "innerDX": [195, 180, 170, 155, 115],
+    "outerDX": [215, 195, 180, 165, 125]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 19,
+    "innerDX": [200, 185, 175, 160, 115],
+    "outerDX": [225, 200, 185, 170, 125]
+  },
+  {
+    "type": "byDegree",
+    "heightIndex": 20,
+    "innerDX": [210, 190, 180, 165, 120],
+    "outerDX": [230, 205, 190, 175, 130]
+  },
+
+
+
   {
     "type": "bySize",
     "heightIndex": 2,
