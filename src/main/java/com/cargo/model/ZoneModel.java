@@ -2,7 +2,7 @@ package com.cargo.model;
 
 import org.locationtech.jts.geom.Coordinate;
 
-import static com.cargo.util.GeometryUtils.toPoints;
+import static com.cargo.util.Utils.toPoints;
 
 public class ZoneModel extends ShapeModel {
 

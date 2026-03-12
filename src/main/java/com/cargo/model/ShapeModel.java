@@ -3,7 +3,7 @@ package com.cargo.model;
 import com.cargo.util.GeometricShape;
 import org.locationtech.jts.geom.*;
 
-import static com.cargo.util.GeometryUtils.*;
+import static com.cargo.util.Utils.*;
 
 public class ShapeModel implements GeometricShape {
 

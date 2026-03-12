@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import static com.cargo.util.GeometryUtils.*;
 import static com.cargo.util.InitializationUtils.*;
+import static com.cargo.util.Utils.*;
 
 
 public class Main {
@@ -18,11 +19,9 @@ public class Main {
     static void main(String[] args) {
 
         GeometryFactory factory = new GeometryFactory();
-//        System.out.println("JTS работает! Фабрика создана: " + factory);
 
 
         ZoneModel[] zones = zonesInitialization();
-//        System.out.println(Arrays.toString(zones));
 
         double[][] cargoIn = picker();
         Coordinate[] cargoCoords = toCoordinates(cargoIn);
@@ -36,11 +35,8 @@ public class Main {
         Coordinate[][] gapCoords = gapCoords(cargo.getCoords(), boundsPoly);
 
         Coordinate[] coordsAbs = coordAbs(cargoCoords);
-//        System.out.println("Координаты точек - "+ Arrays.toString(cargoCoords));
-//        System.out.println("Абсолютные координаты точек - "+ Arrays.toString(coordsAbs));
 
         int[] result = maxDegree(degreeCalculation(coordsAbs, zones, bounds));
-//        System.out.println(Arrays.toString(result));
 
         String info = "";
 
@@ -52,7 +48,6 @@ public class Main {
 
         finalCalculation(result);
 
-//        System.out.println(Arrays.deepToString(gapCoords));
 
         MainFrame frame = new MainFrame(boundsPoly, cargoPoly, gapCoords, zones, info);
         frame.setVisible(true);
@@ -86,7 +81,7 @@ public class Main {
                         cargoIn = new double[][]{{-2100, 1500}, {2100, 1500}, {2100, 2500}, {-2100, 2500}};
                         break;
                     case 4:
-                        cargoIn = generateCirclePoints(2000000,1800, 3000);
+                        cargoIn = generateCirclePoints(2000000, 1800, 3000);
                         break;
                     default:
                         System.out.println("Неверный номер. Введите число от 1 до 2");
