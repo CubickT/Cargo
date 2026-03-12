@@ -1,12 +1,12 @@
 [
   {
-    "Type": "byDegree",
+    "type": "byDegree",
     "heightIndex": 1,
     "innerDX": [150, 140, 135, 125, 95],
     "outerDX": [170, 150, 145, 135, 105]
   },
   {
-    "Type": "bySize",
+    "type": "bySize",
     "heightIndex": 2,
     "innerDX": [160, 145, 130, 115, 90],
     "outerDX": [180, 160, 140, 130, 110]

@@ -3,12 +3,15 @@ package com.cargo;
 import com.cargo.model.ShapeModel;
 import com.cargo.model.ZoneModel;
 import com.cargo.ui.MainFrame;
+import com.cargo.data.GapTableRow;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Polygon;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
+import static com.cargo.data.GapTableReader.*;
 import static com.cargo.util.GeometryUtils.*;
 import static com.cargo.util.InitializationUtils.*;
 import static com.cargo.util.Utils.*;
@@ -19,7 +22,7 @@ public class Main {
     static void main(String[] args) {
 
         GeometryFactory factory = new GeometryFactory();
-
+        List<GapTableRow> table = createGapTable();
 
         ZoneModel[] zones = zonesInitialization();
 
