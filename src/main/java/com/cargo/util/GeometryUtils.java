@@ -1,6 +1,6 @@
 package com.cargo.util;
 
-import com.cargo.DegreesH;
+import com.cargo.data.DegreesH;
 import com.cargo.model.*;
 import org.locationtech.jts.geom.*;
 

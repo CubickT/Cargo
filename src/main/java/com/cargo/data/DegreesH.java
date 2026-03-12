@@ -1,4 +1,4 @@
-package com.cargo;
+package com.cargo.data;
 
 public enum DegreesH {
 
