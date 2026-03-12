@@ -5,36 +5,35 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GapTableReader {
 
 
-    public static List<GapTableRow> createGapTable() {
+    public static Map<String, GapTableRow> createGapTable() {
         ObjectMapper mapper = new ObjectMapper();
         List<GapTableRow> table;
-        InputStream path = GapTableReader.class.getResourceAsStream("gapTable.json");
 
-
-        if (path == null) {
-            throw new RuntimeException("Файл gapTable.json не найден в ресурсах рядом с классом GapTableReader");
-        }
-
-        {
-            try {
-                table = mapper.readValue(path, new TypeReference<>() {
-                });
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        try (InputStream path = GapTableReader.class.getResourceAsStream("gapTable.json")) {
+            if (path == null) {
+                throw new RuntimeException("Файл gapTable.json не найден");
             }
+            table = mapper.readValue(path, new TypeReference<>() {});
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        for (GapTableRow row : table) {
-            System.out.println("Тип + " + row.getType());
+        Map<String, GapTableRow> gapTable = new HashMap<>();
+
+        for(GapTableRow row : table){
+            String key = row.getType() + "|" + row.getHeightIndex();
+            gapTable.put(key,row);
         }
 
 
-        return table;
+        return gapTable;
     }
 
 }

@@ -8,7 +8,7 @@ import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Polygon;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import static com.cargo.data.GapTableReader.*;
@@ -22,7 +22,7 @@ public class Main {
     static void main(String[] args) {
 
         GeometryFactory factory = new GeometryFactory();
-        List<GapTableRow> table = createGapTable();
+        Map<String, GapTableRow> gapTable = createGapTable();
 
         ZoneModel[] zones = zonesInitialization();
 
