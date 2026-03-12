@@ -36,7 +36,7 @@ public class Main {
 
         Coordinate[] coordsAbs = coordAbs(cargoCoords);
 
-        int[] result = maxDegree(degreeCalculation(coordsAbs, zones, bounds));
+        int[] result = maxInArray(degreeCalculation(coordsAbs, zones, bounds));
 
         String info = "";
 

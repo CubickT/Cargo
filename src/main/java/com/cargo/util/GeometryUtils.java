@@ -7,6 +7,7 @@ import org.locationtech.jts.geom.*;
 import java.util.Arrays;
 
 import static com.cargo.util.Utils.*;
+import static java.lang.Math.abs;
 
 public class GeometryUtils {
 
@@ -40,6 +41,74 @@ public class GeometryUtils {
             }
         }
         return coordsOut;
+    }
+
+    public static Coordinate[][] gapCoords(Coordinate[] coords, Polygon boundsPoly) {
+
+        Coordinate[][] gapCoords = new Coordinate[coords.length][2];
+
+        double DELTA = 30;
+
+        Envelope envelope = boundsPoly.getEnvelopeInternal();
+        double minX = envelope.getMinX();
+        double maxX = envelope.getMaxX();
+        double minY = envelope.getMinY();
+        double maxY = envelope.getMaxY();
+
+        Geometry boundary = boundsPoly.getBoundary();
+
+        for (int i = 0; i < coords.length; i++) {
+
+            Coordinate[] lineHCoord = {
+                    new Coordinate(minX - DELTA, coords[i].y),
+                    new Coordinate(maxX + DELTA, coords[i].y)
+            };
+            LineString lineH = factory.createLineString(lineHCoord);
+
+            Coordinate[] lineVCoord = {
+                    new Coordinate(coords[i].x, minY - DELTA),
+                    new Coordinate(coords[i].x, maxY + DELTA)
+            };
+            LineString lineV = factory.createLineString(lineVCoord);
+
+            Coordinate[] intersectionsH = lineH.intersection(boundary).getCoordinates();
+            Coordinate[] intersectionsV = lineV.intersection(boundary).getCoordinates();
+
+
+            if (intersectionsH.length > 0) {
+                Coordinate best = null;
+                double minDistanceH = Double.MAX_VALUE;
+                for (Coordinate h : intersectionsH) {
+
+                    double diff = abs(coords[i].x - h.x);
+
+                    if (diff < minDistanceH) {
+                        minDistanceH = diff;
+                        best = h;
+                    }
+
+                }
+                gapCoords[i][0] = best;
+            }
+            if (intersectionsV.length > 0) {
+                Coordinate best = null;
+                double minDistanceV = Double.MAX_VALUE;
+                for (Coordinate v : intersectionsV) {
+
+                    double diff = abs(coords[i].y - v.y);
+
+                    if (diff < minDistanceV) {
+                        minDistanceV = diff;
+                        best = v;
+                    }
+
+                }
+                gapCoords[i][1] = best;
+            }
+
+        }
+
+        return gapCoords;
     }
 
     public static int[][] degreeCalculation(Coordinate[] coordsIn, ZoneModel[] zones, ShapeModel bounds) {
