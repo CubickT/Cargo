@@ -77,7 +77,7 @@ public class Utils {
         for (int i = 0; i < tableHeights.length; i++) {
 
             if (height >= tableHeights[i]) {
-                heightIndex = i;
+                heightIndex = i + 1;
             }
 
         }
