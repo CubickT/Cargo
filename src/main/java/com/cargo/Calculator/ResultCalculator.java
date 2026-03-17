@@ -99,7 +99,7 @@ public class ResultCalculator {
 
     private static int calculatePossibleMode(double[] minInner, double[] minOuter, double innerDist, double outerDist) {
 
-        for (int i = minInner.length - 1; i >= 0; i--) {
+        for (int i = 0; i < minInner.length ; i++) {
 
             if (minOuter[i] < outerDist && minInner[i] < innerDist) {
                 return i + 1;
