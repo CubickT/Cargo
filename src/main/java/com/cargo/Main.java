@@ -1,5 +1,6 @@
 package com.cargo;
 
+import com.cargo.model.Result;
 import com.cargo.model.ShapeModel;
 import com.cargo.model.ZoneModel;
 import com.cargo.ui.MainFrame;
@@ -7,10 +8,10 @@ import com.cargo.data.GapTableRow;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Polygon;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Scanner;
 
+import static com.cargo.Calculator.Calculator.calculator;
 import static com.cargo.data.GapTableReader.*;
 import static com.cargo.util.GeometryUtils.*;
 import static com.cargo.util.InitializationUtils.*;
@@ -21,12 +22,13 @@ public class Main {
     @SuppressWarnings("unused")
     static void main(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
         GeometryFactory factory = new GeometryFactory();
         Map<String, GapTableRow> gapTable = createGapTable();
 
         ZoneModel[] zones = zonesInitialization();
 
-        double[][] cargoIn = picker();
+        double[][] cargoIn = picker(scanner);
         Coordinate[] cargoCoords = toCoordinates(cargoIn);
         double[][] boundsIn = {{0, 150}, {1300, 150}, {1300, 380}, {1625, 380}, {1625, 4000}, {620, 5300}, {-620, 5300}, {-1625, 4000}, {-1625, 380}, {-1300, 380}, {-1300, 150}, {0, 150}};
 
@@ -37,19 +39,15 @@ public class Main {
         Polygon cargoPoly = cargo.getPoly();
         Coordinate[][] gapCoords = gapCoords(cargo.getCoords(), boundsPoly);
 
-        Coordinate[] coordsAbs = coordAbs(cargoCoords);
-
-        int[] result = maxInArray(degreeCalculation(coordsAbs, zones, bounds));
-
         String info = "";
 
         if (boundsPoly.contains(cargoPoly)) {
             info += "Объект входит в габарит";
         } else {
-            info += "Объект не входит в габарит. Степень - " + Arrays.toString(result);
+            info += "Объект не входит в габарит. Степень - ";
         }
 
-        finalCalculation(result);
+        Result result = calculator(cargo,bounds);
 
 
         MainFrame frame = new MainFrame(boundsPoly, cargoPoly, gapCoords, zones, info);
@@ -57,8 +55,7 @@ public class Main {
 
     }
 
-    public static double[][] picker() {
-        Scanner scanner = new Scanner(System.in);
+    public static double[][] picker(Scanner scanner) {
         double[][] cargoIn;
         int input;
 
@@ -97,8 +94,6 @@ public class Main {
                 scanner.next();
             }
         }
-
-        scanner.close();
         return cargoIn;
 
     }

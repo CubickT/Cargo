@@ -1,10 +1,7 @@
 package com.cargo.util;
 
-import com.cargo.data.DegreesH;
 import com.cargo.model.*;
 import org.locationtech.jts.geom.*;
-
-import java.util.Arrays;
 
 import static com.cargo.util.Utils.*;
 import static java.lang.Math.abs;
@@ -111,7 +108,7 @@ public class GeometryUtils {
         return gapCoords;
     }
 
-    public static int[][] degreeCalculation(Coordinate[] coordsIn, ZoneModel[] zones, ShapeModel bounds) {
+    public static int[][] calculateDegree(Coordinate[] coordsIn, ZoneModel[] zones, ShapeModel bounds) {
 
         Point[] pointsIn = toPoints(coordsIn);
         Polygon boundsPoly = bounds.getPoly();
@@ -150,77 +147,6 @@ public class GeometryUtils {
         }
 
         return result;
-    }
-
-    public static void finalCalculation(int[] maxDegree) {
-
-        DegreesH degreeH = DegreesH.fromCode(maxDegree[0]);
-        int code = degreeH.getCode();
-
-        if (code == 0) {
-            System.out.println("Груз габаритен");
-            return;
-        } else if (code == 7) {
-            System.out.println("Груз абсолютно негабаритен");
-            return;
-        }
-
-        double width = degreeH.getSize();
-        double height = degreeH.getHeight();
-        int heighIndex = calculateHeightIndex(height);
-
-
-        System.out.println("Степень - " + code);
-        System.out.println("Полуширина - " + width);  //2240
-        System.out.println("Высота - " + height);     //2800
-        System.out.println("Индекс высоты - " + heighIndex);
-
-
-        double radius = 400;
-        double elevationOuter = 60;
-
-        double innerDist = 2500;
-        double outerDist = 2300;
-
-//        Минимально допустимые зазоры
-        double[] innerDX = {150, 140, 135, 125, 95};
-        double[] outerDX = {170, 150, 145, 135, 105};
-
-        double wagonOutage = 36000 / radius;
-
-        double innerXOffset = wagonOutage + height * (elevationOuter / 1600);
-        double outerXOffset = wagonOutage - height * (elevationOuter / 1600);
-
-        System.out.println("Внутреннее доп. смещение X - " + innerXOffset);
-        System.out.println("Наружнее доп. смещение X - " + outerXOffset);
-
-
-        double[] minInner = new double[innerDX.length];
-        double[] minOuter = new double[outerDX.length];
-
-        for (int i = 0; i < innerDX.length; i++) {
-            minInner[i] = width + innerDX[i] + innerXOffset;
-        }
-        for (int i = 0; i < outerDX.length; i++) {
-            minOuter[i] = width + outerDX[i] + outerXOffset;
-        }
-
-        System.out.println("Внутренние " + Arrays.toString(minInner));
-        System.out.println("Наружные " + Arrays.toString(minOuter));
-        System.out.println("Внутреннее " + innerDist);
-        System.out.println("Наружнее " + outerDist);
-
-        int possibleMode = 0;
-
-        for (int i = minInner.length - 1; i >= 0; i--) {
-
-            if (minOuter[i] < outerDist && minInner[i] < innerDist) {
-                possibleMode = i + 1;
-            }
-
-        }
-        System.out.println("Допустимый режим хода - " + possibleMode);
-
     }
 
     public static double[][] generateCirclePoints(int numPoints, double radius, double yOffset) {

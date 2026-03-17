@@ -1,12 +1,10 @@
 package com.cargo.data;
 
-import java.util.List;
-
 public class GapTableRow {
     private String type;
     private int heightIndex;
-    private List<Integer> innerDX;
-    private List<Integer> outerDX;
+    private double[] innerDX;
+    private double[] outerDX;
 
     public GapTableRow() {
     }
@@ -27,19 +25,19 @@ public class GapTableRow {
         this.heightIndex = heightIndex;
     }
 
-    public List<Integer> getInnerDX() {
+    public double[] getInnerDX() {
         return innerDX;
     }
 
-    public void setInnerDX(List<Integer> innerDX) {
+    public void setInnerDX(double[] innerDX) {
         this.innerDX = innerDX;
     }
 
-    public List<Integer> getOuterDX() {
+    public double[] getOuterDX() {
         return outerDX;
     }
 
-    public void setOuterDX(List<Integer> outerDX) {
+    public void setOuterDX(double[] outerDX) {
         this.outerDX = outerDX;
     }
 

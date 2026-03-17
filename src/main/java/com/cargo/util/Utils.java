@@ -69,7 +69,7 @@ public class Utils {
         return new int[]{max0, max1};
     }
 
-    public static int calculateHeightIndex(double height) {
+    public static int calculateHeightIndex(double height)   {
 
         double[] tableHeights = {800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2500, 2800, 3100, 3400, 3700, 4000, 4200, 4300, 4600, 4900, 5200, 5550};
         int heightIndex = 0;
