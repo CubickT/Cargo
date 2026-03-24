@@ -37,7 +37,7 @@ public class InitializationUtils {
             case "top":
                 for (int i = 0; i < coordArray.size(); i++) {
                     Coordinate[] coords = coordArray.get(i);
-                    zoneModels[i] = new ZoneModel(coords, 0, i+1);
+                    zoneModels[i] = new ZoneModel(coords, 0, i + 1);
                 }
                 break;
             case "side":
@@ -118,12 +118,15 @@ public class InitializationUtils {
 
     public static ArrayList<Coordinate[]> topZoneListCreation() {
 
-        ArrayList<Coordinate[]> topZone = new ArrayList<>(3);
+        ArrayList<Coordinate[]> topZone = new ArrayList<>(2);
 
         double minY = 4000;
         double maxY = 5300;
         double[] bottomX = {1625, 1700, 1800, 1850};
         double[] topX = {620, 880, 1020, 1140};
+
+        Coordinate extraPoint1 = new Coordinate(1480, 4700);
+        Coordinate extraPoint2 = new Coordinate(1700, 4520);
 
         for (int i = 0; i < bottomX.length - 1; i++) {
 
@@ -132,15 +135,29 @@ public class InitializationUtils {
             double xLeftB = bottomX[i];
             double xRightB = bottomX[i + 1];
 
-            Coordinate[] coords = {
-                    new Coordinate(xLeftB, minY),
-                    new Coordinate(xRightB, minY),
-                    new Coordinate(xRightT, maxY),
-                    new Coordinate(xLeftT, maxY),
-                    new Coordinate(xLeftB, minY) // замыкание
-            };
-            topZone.add(coords);
+            java.util.ArrayList<Coordinate> points = new java.util.ArrayList<>();
+
+            points.add(new Coordinate(xLeftB, minY));   // нижняя левая
+            points.add(new Coordinate(xRightB, minY));  // нижняя правая
+
+            if (i == 1) {
+                points.add(extraPoint1);
+            } else if (i == 2) {
+                points.add(extraPoint2);
+            }
+
+            points.add(new Coordinate(xRightT, maxY));  // верхняя правая
+            points.add(new Coordinate(xLeftT, maxY));   // верхняя левая
+
+            if (i == 2) {
+                points.add(extraPoint1);
+            }
+
+            points.add(points.getFirst());
+
+            topZone.add(points.toArray(new Coordinate[0]));
         }
+        System.out.println("topZone size: " + topZone.size());
         return topZone;
     }
 
