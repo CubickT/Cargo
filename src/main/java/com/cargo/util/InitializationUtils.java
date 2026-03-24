@@ -1,5 +1,6 @@
 package com.cargo.util;
 
+import com.cargo.model.ShapeModel;
 import com.cargo.model.ZoneModel;
 import org.locationtech.jts.geom.Coordinate;
 
@@ -37,13 +38,13 @@ public class InitializationUtils {
             case "top":
                 for (int i = 0; i < coordArray.size(); i++) {
                     Coordinate[] coords = coordArray.get(i);
-                    zoneModels[i] = new ZoneModel(coords, 0, i+1);
+                    zoneModels[i] = new ZoneModel("Зона", ShapeModel.ObjectType.ZONES, coords, 0, i+1);
                 }
                 break;
             case "side":
                 for (int i = 0; i < coordArray.size(); i++) {
                     Coordinate[] coords = coordArray.get(i);
-                    zoneModels[i] = new ZoneModel(coords, i + 1, 0);
+                    zoneModels[i] = new ZoneModel("Зона", ShapeModel.ObjectType.ZONES, coords, i + 1, 0);
                 }
                 break;
         }

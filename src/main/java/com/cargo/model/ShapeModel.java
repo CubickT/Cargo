@@ -7,16 +7,25 @@ import static com.cargo.util.Utils.*;
 
 public class ShapeModel implements GeometricShape {
 
+    public enum ObjectType {
+        CARGO, BOUNDS, ZONES
+    }
+
     GeometryFactory factory = new GeometryFactory();
 
+
+    String name;
+    ObjectType type;
     double[][] inputPoints;
     Point[] points;
     Coordinate[] coords;
     LinearRing ring;
     Polygon poly;
 
-    public ShapeModel(double[][] pointsIn) {
+    public ShapeModel(String name, ObjectType type, double[][] pointsIn) {
 
+        this.name = name;
+        this.type = type;
         this.inputPoints = pointsIn;
         this.coords = toCoordinates(inputPoints);
         this.points = toPoints(coords);
@@ -25,8 +34,6 @@ public class ShapeModel implements GeometricShape {
 
     }
 
-    public ShapeModel() {
-    }
 
     @Override
     public Polygon getPoly() {

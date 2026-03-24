@@ -5,6 +5,11 @@ import com.cargo.model.ShapeModel;
 import com.cargo.model.ZoneModel;
 import com.cargo.ui.MainFrame;
 import com.cargo.data.GapTableRow;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Polygon;
 
@@ -18,9 +23,11 @@ import static com.cargo.util.InitializationUtils.*;
 import static com.cargo.util.Utils.*;
 
 
-public class Main {
+public class Main extends Application {
     @SuppressWarnings("unused")
     static void main(String[] args) {
+
+        launch(args);
 
         Scanner scanner = new Scanner(System.in);
         GeometryFactory factory = new GeometryFactory();
@@ -32,8 +39,8 @@ public class Main {
         Coordinate[] cargoCoords = toCoordinates(cargoIn);
         double[][] boundsIn = {{0, 150}, {1300, 150}, {1300, 380}, {1625, 380}, {1625, 4000}, {620, 5300}, {-620, 5300}, {-1625, 4000}, {-1625, 380}, {-1300, 380}, {-1300, 150}, {0, 150}};
 
-        ShapeModel bounds = new ShapeModel(boundsIn);
-        ShapeModel cargo = new ShapeModel(cargoIn);
+        ShapeModel bounds = new ShapeModel("BOUNDS", ShapeModel.ObjectType.BOUNDS, boundsIn);
+        ShapeModel cargo = new ShapeModel("CARGO", ShapeModel.ObjectType.CARGO, cargoIn);
 
         Polygon boundsPoly = bounds.getPoly();
         Polygon cargoPoly = cargo.getPoly();
@@ -99,4 +106,16 @@ public class Main {
     }
 
 
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/App.fxml"));
+
+        Scene scene = new Scene(root);
+
+        stage.setTitle("Моё приложение");
+        stage.setScene(scene);
+        stage.show();
+
+
+    }
 }

@@ -1,9 +1,12 @@
 package com.cargo.IO;
 
+import com.cargo.model.ShapeModel;
+
+import java.awt.*;
 import java.util.Scanner;
 
 public record CalculationParameters(double radius, double elevationOuter, double inner,
-                                    double outer) implements ParameterInput {
+                                    double outer, ShapeModel cargo, ShapeModel bounds) implements ParameterInput {
 
     public static class ConsoleInput {
         private static final Scanner SCANNER = new Scanner(System.in);
@@ -17,7 +20,7 @@ public record CalculationParameters(double radius, double elevationOuter, double
             double inner = readDouble();
             System.out.println("Введите наружнее расстояние до сооружения");
             double outer = readDouble();
-            return new CalculationParameters(radius, elevationOuter, inner, outer);
+            return new CalculationParameters(radius, elevationOuter, inner, outer, null, null);
         }
 
         private static double readDouble() {

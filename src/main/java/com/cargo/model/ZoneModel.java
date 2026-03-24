@@ -10,17 +10,25 @@ public class ZoneModel extends ShapeModel {
     int degreeH;
     int degreeV;
 
-    public ZoneModel(Coordinate[] coordsIn, int degreeH, int degreeV) {
+    public ZoneModel(String name, ObjectType type, Coordinate[] coordsIn, int degreeH, int degreeV) {
 
-        this.coords = coordsIn;
-        this.points = toPoints(coords);
-        this.ring = factory.createLinearRing(coords);
-        this.poly = factory.createPolygon(ring);
+        super(name, type, coordinatesToDoubleArray(coordsIn));
 
         this.degreeH = degreeH;
         this.degreeV = degreeV;
 
+
     }
+
+    private static double[][] coordinatesToDoubleArray(Coordinate[] coords) {
+        double[][] result = new double[coords.length][2];
+        for (int i = 0; i < coords.length; i++) {
+            result[i][0] = coords[i].x;
+            result[i][1] = coords[i].y;
+        }
+        return result;
+    }
+
 
     @Override
     public int getDegreeH() {
