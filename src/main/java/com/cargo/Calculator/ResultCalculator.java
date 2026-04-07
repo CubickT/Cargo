@@ -8,7 +8,7 @@ import com.cargo.model.Result;
 import java.util.Arrays;
 import java.util.Map;
 
-import static com.cargo.util.Utils.calculateHeightIndex;
+import static com.cargo.util.Utils.calculateIndexHorizontal;
 
 public class ResultCalculator {
 
@@ -25,7 +25,7 @@ public class ResultCalculator {
 
         double width = degreeH.getSize();
         double height = degreeH.getHeight();
-        int heighIndex = calculateHeightIndex(height);
+        int heighIndex = calculateIndexHorizontal(height);
 
         String key = "byDegree|" + heighIndex;
         GapTableRow tableRow = gapTable.get(key);
