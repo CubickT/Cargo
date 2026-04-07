@@ -121,7 +121,60 @@
     "outerDX": [230, 205, 190, 175, 130]
   },
 
-
+  {
+    "type": "byDegreeVertical",
+    "heightIndex": 0,
+    "bottomDX": [60, 60, 60, 60, 50],
+    "topDX": [75, 70, 70, 70, 50]
+  },
+  {
+    "type": "byDegreeVertical",
+    "heightIndex": 1,
+    "bottomDX": [60, 60, 60, 60, 50],
+    "topDX": [80, 75, 75, 75, 50]
+  },
+  {
+    "type": "byDegreeVertical",
+    "heightIndex": 2,
+    "bottomDX": [60, 60, 60, 60, 60],
+    "topDX": [85, 80, 80, 80, 60]
+  },
+  {
+    "type": "byDegreeVertical",
+    "heightIndex": 3,
+    "bottomDX": [65, 60, 60, 60, 60],
+    "topDX": [90, 85, 80, 80, 60]
+  },
+  {
+    "type": "byDegreeVertical",
+    "heightIndex": 4,
+    "bottomDX": [80, 75, 70, 70, 65],
+    "topDX": [95, 90, 85, 85, 65]
+  },
+  {
+    "type": "byDegreeVertical",
+    "heightIndex": 5,
+    "bottomDX": [85, 80, 75, 75, 70],
+    "topDX": [100, 95, 90, 90, 70]
+  },
+  {
+    "type": "byDegreeVertical",
+    "heightIndex": 6,
+    "bottomDX": [90, 85, 80, 80, 75],
+    "topDX": [105, 100, 95, 95, 75]
+  },
+  {
+    "type": "byDegreeVertical",
+    "heightIndex": 7,
+    "bottomDX": [95, 90, 85, 85, 80],
+    "topDX": [110, 105, 100, 100, 80]
+  },
+  {
+    "type": "byDegreeVertical",
+    "heightIndex": 8,
+    "bottomDX": [100, 95, 90, 90, 85],
+    "topDX": [115, 110, 105, 105, 85]
+  },
 
   {
     "type": "bySize",

@@ -5,6 +5,8 @@ public class GapTableRow {
     private int heightIndex;
     private double[] innerDX;
     private double[] outerDX;
+    private double[] bottomDX;
+    private double[] topDX;
 
     public GapTableRow() {
     }
@@ -41,4 +43,19 @@ public class GapTableRow {
         this.outerDX = outerDX;
     }
 
+    public double[] getBottomDX() {
+        return bottomDX;
+    }
+
+    public void setBottomDX(double[] bottomDX) {
+        this.bottomDX = bottomDX;
+    }
+
+    public double[] getTopDX() {
+        return topDX;
+    }
+
+    public void setTopDX(double[] topDX) {
+        this.topDX = topDX;
+    }
 }
