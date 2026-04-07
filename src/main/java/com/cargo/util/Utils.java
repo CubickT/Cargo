@@ -84,4 +84,19 @@ public class Utils {
         return heightIndex;
     }
 
+    public static int calculateIndexVertical(double height) {
+        double[] tableHeights = {700, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2300};
+        int heightIndex = 0;
+
+        for (int i = 0; i < tableHeights.length; i++) {
+
+            if (height >= tableHeights[i]) {
+                heightIndex = i + 1;
+            }
+
+        }
+        return heightIndex;
+
+    }
+
 }
