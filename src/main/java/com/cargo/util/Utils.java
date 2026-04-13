@@ -53,9 +53,10 @@ public class Utils {
         return coordsAbs;
     }
 
-    public static int[] maxInArray(int[][] array) {
+    public static int[] maxDegree(int[][] array) {
         int max0 = 0;
         int max1 = 0;
+        int max2 = 0;
         for (int[] ints : array) {
 
             if (ints[0] > max0) {
@@ -64,12 +65,15 @@ public class Utils {
             if (ints[1] > max1) {
                 max1 = ints[1];
             }
+            if (ints[2] > max2) {
+                max2 = ints[2];
+            }
 
         }
-        return new int[]{max0, max1};
+        return new int[]{max0, max1, max2};
     }
 
-    public static int calculateIndexHorizontal(double height)   {
+    public static int calculateIndexHorizontal(double height) {
 
         double[] tableHeights = {800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2500, 2800, 3100, 3400, 3700, 4000, 4200, 4300, 4600, 4900, 5200, 5550};
         int heightIndex = 0;

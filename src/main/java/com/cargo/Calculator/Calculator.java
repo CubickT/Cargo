@@ -15,7 +15,7 @@ import static com.cargo.Calculator.ResultCalculator.finalCalculation;
 import static com.cargo.util.GeometryUtils.calculateDegree;
 import static com.cargo.util.InitializationUtils.zonesInitialization;
 import static com.cargo.util.Utils.coordAbs;
-import static com.cargo.util.Utils.maxInArray;
+import static com.cargo.util.Utils.maxDegree;
 
 public class Calculator {
 
@@ -32,7 +32,7 @@ public class Calculator {
         Coordinate[] cargoABS = coordAbs(cargo.getCoords());
 
         int[][] degrees = calculateDegree(cargoABS, zones, bounds);
-        int[] maxDegree = maxInArray(degrees);
+        int[] maxDegree = maxDegree(degrees);
 
         CalculationParameters params = read();
 
