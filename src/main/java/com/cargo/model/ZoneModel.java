@@ -8,9 +8,10 @@ public class ZoneModel extends ShapeModel {
 
 
     int degreeH;
-    int degreeV;
+    int degreeT;
+    int degreeB;
 
-    public ZoneModel(Coordinate[] coordsIn, int degreeH, int degreeV) {
+    public ZoneModel(Coordinate[] coordsIn, int degreeH, int degreeV, int degreeB) {
 
         this.coords = coordsIn;
         this.points = toPoints(coords);
@@ -18,7 +19,8 @@ public class ZoneModel extends ShapeModel {
         this.poly = factory.createPolygon(ring);
 
         this.degreeH = degreeH;
-        this.degreeV = degreeV;
+        this.degreeT = degreeV;
+        this.degreeB = degreeB;
 
     }
 
@@ -28,7 +30,10 @@ public class ZoneModel extends ShapeModel {
     }
 
     @Override
-    public int getDegreeV() {
-        return degreeV;
+    public int getDegreeT() {
+        return degreeT;
     }
+
+    @Override
+    public  int getDegreeB(){return degreeB;}
 }

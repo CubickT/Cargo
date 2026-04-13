@@ -114,7 +114,7 @@ public class GeometryUtils {
         Polygon boundsPoly = bounds.getPoly();
 
         Polygon[] zonePolies = new Polygon[zones.length];
-        int[][] result = new int[coordsIn.length][2];
+        int[][] result = new int[coordsIn.length][3];
 
 
         for (int i = 0; i < zones.length; i++) {
@@ -128,7 +128,8 @@ public class GeometryUtils {
             for (int i = 0; i < zones.length; i++) {
                 if (zonePolies[i].contains(pointsIn[j])) {
                     result[j][0] = zones[i].getDegreeH();
-                    result[j][1] = zones[i].getDegreeV();
+                    result[j][1] = zones[i].getDegreeT();
+                    result[j][2] = zones[i].getDegreeB();
                     foundInZone = true;
                     break;
                 }
@@ -138,10 +139,12 @@ public class GeometryUtils {
                 if (boundsPoly.contains(pointsIn[j])) {
                     result[j][0] = 0;
                     result[j][1] = 0;
+                    result[j][2] = 0;
                 } else {
 
                     result[j][0] = 7;
                     result[j][1] = 4;
+                    result[j][2] = 4;
                 }
             }
         }

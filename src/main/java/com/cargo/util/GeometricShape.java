@@ -7,5 +7,6 @@ public interface GeometricShape {
     Polygon getPoly();
     Coordinate[] getCoords();
     int getDegreeH();
-    int getDegreeV();
+    int getDegreeT();
+    int getDegreeB();
 }

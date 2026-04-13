@@ -44,7 +44,12 @@ public class ShapeModel implements GeometricShape {
     }
 
     @Override
-    public int getDegreeV() {
+    public int getDegreeT() {
+        return 0;
+    }
+
+    @Override
+    public int getDegreeB() {
         return 0;
     }
 }
