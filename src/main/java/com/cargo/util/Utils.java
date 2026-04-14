@@ -76,30 +76,28 @@ public class Utils {
     public static int calculateIndexHorizontal(double height) {
 
         double[] tableHeights = {800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2500, 2800, 3100, 3400, 3700, 4000, 4200, 4300, 4600, 4900, 5200, 5550};
-        int heightIndex = 0;
 
         for (int i = 0; i < tableHeights.length; i++) {
 
-            if (height >= tableHeights[i]) {
-                heightIndex = i + 1;
+            if (height <= tableHeights[i]) {
+                return i + 1;
             }
 
         }
-        return heightIndex;
+        return tableHeights.length + 1;
     }
 
     public static int calculateIndexVertical(double height) {
-        double[] tableHeights = {700, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2300};
-        int heightIndex = 0;
+        double[] tableWidths = {700, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2300};
 
-        for (int i = 0; i < tableHeights.length; i++) {
+        for (int i = 0; i < tableWidths.length; i++) {
 
-            if (height >= tableHeights[i]) {
-                heightIndex = i + 1;
+            if (height <= tableWidths[i]) {
+                return i + 1;
             }
 
         }
-        return heightIndex;
+        return tableWidths.length + 1;
 
     }
 
