@@ -102,6 +102,8 @@ public class ResultCalculator {
         Result result = new Result();
         result.setMinPossibleInner(minInner);
         result.setMinPossibleOuter(minOuter);
+        result.setMinPossibleBottom(minBottom);
+        result.setMinPossibleTop(minTop);
         result.setPossibleMode(possibleMode);
         result.setIsPossible(isPossible);
 

@@ -5,6 +5,8 @@ public class Result implements ResultInterface {
     int possibleMode;
     double[] minPossibleOuter;
     double[] minPossibleInner;
+    double[] minPossibleBottom;
+    double[] minPossibleTop;
     boolean isPossible;
 
     @Override
@@ -20,6 +22,16 @@ public class Result implements ResultInterface {
     @Override
     public void setMinPossibleInner(double[] minPossibleInner) {
         this.minPossibleInner = minPossibleInner;
+    }
+
+    @Override
+    public void setMinPossibleBottom(double[] minPossibleBottom) {
+        this.minPossibleBottom = minPossibleBottom;
+    }
+
+    @Override
+    public void setMinPossibleTop(double[] minPossibleTop) {
+        this.minPossibleTop = minPossibleTop;
     }
 
     @Override
