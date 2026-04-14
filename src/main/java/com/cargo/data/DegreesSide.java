@@ -6,7 +6,7 @@ public enum DegreesSide {
     FIRST(1, 1700, 4000),
     SECOND(2, 1800, 4000),
     THIRD(3, 1850, 4000),
-    FOURTH(4, 2000, 4000),
+    FOURTH(4, 2000, 3700),
     FIFTH(5, 2080, 3400),
     SIXTH(6, 2240, 2800),
     OUT(7,0,0);
