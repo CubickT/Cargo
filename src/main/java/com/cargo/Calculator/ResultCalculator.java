@@ -1,40 +1,32 @@
 package com.cargo.Calculator;
 
 import com.cargo.IO.CalculationParameters;
-import com.cargo.data.DegreesH;
+import com.cargo.data.DegreesLower;
+import com.cargo.data.DegreesSide;
+import com.cargo.data.DegreesTop;
 import com.cargo.data.GapTableRow;
 import com.cargo.model.Result;
 
 import java.util.Arrays;
 import java.util.Map;
 
-import static com.cargo.util.Utils.calculateIndexHorizontal;
+import static com.cargo.util.Utils.*;
 
 public class ResultCalculator {
 
     public static Result finalCalculation(int[] maxDegree, CalculationParameters params, Map<String, GapTableRow> gapTable) {
 
-        DegreesH degreeH = DegreesH.fromCode(maxDegree[0]);
+        DegreesSide degreeH = DegreesSide.fromCode(maxDegree[0]);
+        DegreesTop degreeT = DegreesTop.fromCode(maxDegree[1]);
+        DegreesLower degreeB = DegreesLower.fromCode(maxDegree[2]);
+
         int code = degreeH.getCode();
 
-        if (code == 0) {
-            System.out.println("Груз габаритен");
-        } else if (code == 7) {
-            System.out.println("Груз абсолютно негабаритен");
-        }
-
-        double width = degreeH.getSize();
-        double height = degreeH.getHeight();
-        int heighIndex = calculateIndexHorizontal(height);
-
-        String key = "byDegree|" + heighIndex;
-        GapTableRow tableRow = gapTable.get(key);
-
-        System.out.println("Степень - " + code);
-        System.out.println("Полуширина - " + width);  //2240
-        System.out.println("Высота - " + height);     //2800
-        System.out.println("Индекс высоты - " + heighIndex);
-
+//        if (code == 0) {
+//            System.out.println("Груз габаритен");
+//        } else if (code == 7) {
+//            System.out.println("Груз абсолютно негабаритен");
+//        }
 
         double radius = params.radius();
         double elevationOuter = params.elevationOuter();
@@ -42,22 +34,66 @@ public class ResultCalculator {
         double innerDist = params.inner();
         double outerDist = params.outer();
 
-        double[] innerDX = tableRow.getInnerDX();
-        double[] outerDX = tableRow.getOuterDX();
+        System.out.println("Внутреннее Заданное - " + innerDist);
+        System.out.println("Наружнее Заданное - " + outerDist);
+        System.out.println("Заданный радиус - " + radius);
+        System.out.println("Заданное возвышение рельса - " + elevationOuter);
 
-        Offsets offsets = calculateOffsets(radius, height, elevationOuter);
+        double widthH = degreeH.getSize();
+        double heightH = degreeH.getHeight();
+        int heightIndexH = calculateIndexHorizontal(heightH);
+
+        double widthT = degreeT.getSize();
+        double heightT = degreeT.getHeight();
+        int heightIndexT = calculateIndexVertical(widthT);
+//        System.out.println("ШИРИНА ВВЕРХНЕЙ ЗОНЫ + " + widthT);
+//        System.out.println("ИНДЕКС ВВЕРХ + " + heightIndexT);
+
+        double widthB = degreeB.getSize();
+        double heightB = degreeB.getHeight();
+        int heightIndexB = calculateIndexVertical(widthB);
+//        System.out.println("ШИРИНА НИЖНЕЙ ЗОНЫ + " + widthB);
+//        System.out.println("ИНДЕКС НИЗ + " + heightIndexB);
+
+        String keyH = "byDegree|" + heightIndexH;
+        GapTableRow tableRowH = gapTable.get(keyH);
+
+        String keyT = "byDegreeVertical|" + heightIndexT;
+        GapTableRow tableRowT = gapTable.get(keyT);
+
+        String keyB = "byDegreeVertical|" + heightIndexB;
+        GapTableRow tableRowB = gapTable.get(keyB);
+
+        System.out.println("Степень - Н" + code + maxDegree[1] + maxDegree[2]);
+//        System.out.println("Полуширина - " + widthH);  //2240
+//        System.out.println("Высота - " + heightH);     //2800
+//        System.out.println("Индекс высоты - " + heightIndexH);
+
+        double[] innerDX = tableRowH.getInnerDX();
+        double[] outerDX = tableRowH.getOuterDX();
+        double[] DXTop = tableRowT.getTopDX();
+        double[] DXBottom = tableRowB.getBottomDX();
+
+        System.out.println("Верхние зазоры - " + Arrays.toString(DXTop));
+        System.out.println("Нижние зазоры - " + Arrays.toString(DXBottom));
+
+        Offsets offsets = calculateOffsets(radius, heightH, elevationOuter);
 
         System.out.println("Внутреннее доп. смещение X - " + offsets.innerXOffset);
         System.out.println("Наружнее доп. смещение X - " + offsets.outerXOffset);
 
 
-        double[] minInner = calculateMinDist(width, innerDX, offsets.innerXOffset);
-        double[] minOuter = calculateMinDist(width, outerDX, offsets.outerXOffset);
+        double[] minInner = calculateMinDist(widthH, innerDX, offsets.innerXOffset);
+        double[] minOuter = calculateMinDist(widthH, outerDX, offsets.outerXOffset);
+        double[] minBottom = calculateMinDisNoOffset(heightB, negateArray(DXBottom));
+        double[] minTop = calculateMinDisNoOffset(heightT,DXTop);
 
-        System.out.println("Внутренние " + Arrays.toString(minInner));
-        System.out.println("Наружные " + Arrays.toString(minOuter));
-        System.out.println("Внутреннее " + innerDist);
-        System.out.println("Наружнее " + outerDist);
+        System.out.println("Верхние зазоры - " + Arrays.toString(minTop));
+
+        System.out.println("Внутренние зазоры - " + Arrays.toString(minInner));
+        System.out.println("Наружные зазоры - " + Arrays.toString(minOuter));
+
+        System.out.println("Нижние зазоры - " + Arrays.toString(minBottom));
 
         int possibleMode = calculatePossibleMode(minInner, minOuter, innerDist, outerDist);
         boolean isPossible = possibleMode > 0;
@@ -97,6 +133,14 @@ public class ResultCalculator {
         return minDist;
     }
 
+    private static double[] calculateMinDisNoOffset(double height, double[] DX) {
+        double[] minDist = new double[DX.length];
+        for (int i = 0; i < DX.length; i++) {
+            minDist[i] = height + DX[i];
+        }
+        return minDist;
+    }
+
     private static int calculatePossibleMode(double[] minInner, double[] minOuter, double innerDist, double outerDist) {
 
         for (int i = 0; i < minInner.length ; i++) {
@@ -112,6 +156,8 @@ public class ResultCalculator {
     private static class Offsets {
         double innerXOffset;
         double outerXOffset;
+        double topYOffset;
+        double bottomYOffset;
 
         Offsets(double innerXOffset, double outerXOffset) {
             this.innerXOffset = innerXOffset;
