@@ -101,4 +101,11 @@ public class Utils {
 
     }
 
+    public static double[] negateArray(double[] originalArray){
+        double[] negatedArray = new double[originalArray.length];
+        for (int i = 0; i < originalArray.length; i++) {
+            negatedArray[i] = -originalArray[i];
+        }
+        return negatedArray;
+    }
 }
