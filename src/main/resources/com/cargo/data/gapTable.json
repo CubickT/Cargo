@@ -123,55 +123,55 @@
 
   {
     "type": "byDegreeVertical",
-    "heightIndex": 0,
+    "heightIndex": 1,
     "bottomDX": [60, 60, 60, 60, 50],
     "topDX": [75, 70, 70, 70, 50]
   },
   {
     "type": "byDegreeVertical",
-    "heightIndex": 1,
+    "heightIndex": 2,
     "bottomDX": [60, 60, 60, 60, 50],
     "topDX": [80, 75, 75, 75, 50]
   },
   {
     "type": "byDegreeVertical",
-    "heightIndex": 2,
+    "heightIndex": 3,
     "bottomDX": [60, 60, 60, 60, 60],
     "topDX": [85, 80, 80, 80, 60]
   },
   {
     "type": "byDegreeVertical",
-    "heightIndex": 3,
+    "heightIndex": 4,
     "bottomDX": [65, 60, 60, 60, 60],
     "topDX": [90, 85, 80, 80, 60]
   },
   {
     "type": "byDegreeVertical",
-    "heightIndex": 4,
+    "heightIndex": 5,
     "bottomDX": [80, 75, 70, 70, 65],
     "topDX": [95, 90, 85, 85, 65]
   },
   {
     "type": "byDegreeVertical",
-    "heightIndex": 5,
+    "heightIndex": 6,
     "bottomDX": [85, 80, 75, 75, 70],
     "topDX": [100, 95, 90, 90, 70]
   },
   {
     "type": "byDegreeVertical",
-    "heightIndex": 6,
+    "heightIndex": 7,
     "bottomDX": [90, 85, 80, 80, 75],
     "topDX": [105, 100, 95, 95, 75]
   },
   {
     "type": "byDegreeVertical",
-    "heightIndex": 7,
+    "heightIndex": 8,
     "bottomDX": [95, 90, 85, 85, 80],
     "topDX": [110, 105, 100, 100, 80]
   },
   {
     "type": "byDegreeVertical",
-    "heightIndex": 8,
+    "heightIndex": 9,
     "bottomDX": [100, 95, 90, 90, 85],
     "topDX": [115, 110, 105, 105, 85]
   },

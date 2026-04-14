@@ -2,7 +2,7 @@ package com.cargo.data;
 
 public enum DegreesLower {
 
-    ZERO(0, 1625,480),
+    ZERO(0, 1625,380),
     FIRST(1, 1700, 480),
     SECOND(2, 1800, 1230),
     THIRD(3, 1850, 1230),

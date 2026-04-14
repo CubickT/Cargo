@@ -2,10 +2,10 @@ package com.cargo.data;
 
 public enum DegreesTop {
 
-    ZERO(0, 1625,5300),
-    FIRST(1, 1700, 5300),
-    SECOND(2, 1800, 5300),
-    THIRD(3, 1850, 5300),
+    ZERO(0, 620,5300),
+    FIRST(1, 880, 5300),
+    SECOND(2, 1020, 5300),
+    THIRD(3, 1140, 5300),
     OUT(7,0,0);
 
     final int code;
