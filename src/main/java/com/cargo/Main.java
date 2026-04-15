@@ -39,15 +39,17 @@ public class Main {
         Polygon cargoPoly = cargo.getPoly();
         Coordinate[][] gapCoords = gapCoords(cargo.getCoords(), boundsPoly);
 
+
+
+        Result result = calculator(cargo,bounds);
+
         String info = "";
 
         if (boundsPoly.contains(cargoPoly)) {
             info += "Груз входит в габарит";
         } else {
-            info += "Груз не входит в габарит. Н060";
+            info += "Груз не входит в габарит. Н" + result.maxDegrees()[0] + result.maxDegrees()[1] + result.maxDegrees()[2];
         }
-
-        Result result = calculator(cargo,bounds);
 
 
         MainFrame frame = new MainFrame(boundsPoly, cargoPoly, gapCoords, zones, info);
