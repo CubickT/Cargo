@@ -28,6 +28,10 @@ public class ShapeModel implements GeometricShape {
     public ShapeModel() {
     }
 
+    public boolean contains(Geometry g){
+        return this.poly.contains(g);
+    }
+
     @Override
     public Polygon getPoly() {
         return this.poly;
