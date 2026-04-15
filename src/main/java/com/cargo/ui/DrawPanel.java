@@ -1,5 +1,7 @@
 package com.cargo.ui;
 
+import com.cargo.IO.CalculationParameters;
+import com.cargo.model.Result;
 import com.cargo.model.ZoneModel;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
@@ -9,20 +11,25 @@ import javax.swing.*;
 import java.awt.*;
 
 import static com.cargo.util.GeometryUtils.coordsOut;
+import static com.cargo.util.GeometryUtils.gapCoords;
 
 public class DrawPanel extends JPanel {
 
     static double PADDING = 30;
+
+    private final CalculationParameters params;
 
     private final Polygon cargoPoly;
     private final Polygon boundsPoly;
     private final Coordinate[][] gapCoords;
     private final ZoneModel[] zones;
 
-    public DrawPanel(Polygon boundsPoly, Polygon cargoPoly, Coordinate[][] gapCoords, ZoneModel[] zones) {
-        this.boundsPoly = boundsPoly;
-        this.cargoPoly = cargoPoly;
-        this.gapCoords = gapCoords;
+    public DrawPanel(Result result, ZoneModel[] zones) {
+        this.params = result.params();
+
+        this.boundsPoly = result.bounds().getPoly();
+        this.cargoPoly = result.cargo().getPoly();
+        this.gapCoords = gapCoords(result.cargo().getCoords(),boundsPoly);
         this.zones = zones;
     }
 
@@ -44,12 +51,18 @@ public class DrawPanel extends JPanel {
         double offsetX = PADDING + (panelWidth - 2 * PADDING - envelope.getWidth() * scale) / 2;
         double offsetY = PADDING + (panelHeight - 2 * PADDING - envelope.getHeight() * scale) / 2;
 
+
+        drawSideStructure(g2d, envelope,scale,offsetX,offsetY);
+
         for (ZoneModel zone : zones) {
             drawPolygon(g2d, zone.getPoly(), Color.LIGHT_GRAY, envelope, scale, offsetX, offsetY);
         }
+
         drawPolygon(g2d, boundsPoly, Color.BLUE, envelope, scale, offsetX, offsetY);
         drawPolygon(g2d, cargoPoly, Color.BLACK, envelope, scale, offsetX, offsetY);
-        drawLines(g2d, Color.RED, envelope, scale, offsetX, offsetY);
+        drawGapLines(g2d, Color.RED, envelope, scale, offsetX, offsetY);
+
+
     }
 
 
@@ -77,7 +90,7 @@ public class DrawPanel extends JPanel {
         g2d.drawPolygon(xPoints, yPoints, n);
     }
 
-    private void drawLines(Graphics2D g2d, Color color, Envelope envelope, double scale, double offX, double offY) {
+    private void drawGapLines(Graphics2D g2d, Color color, Envelope envelope, double scale, double offX, double offY) {
         g2d.setColor(color);
 
         Coordinate[] coords = coordsOut(cargoPoly.getCoordinates(), boundsPoly);
@@ -97,5 +110,24 @@ public class DrawPanel extends JPanel {
                 }
             }
         }
+    }
+
+    private void drawSideStructure(Graphics2D g2d, Envelope envelope, double scale, double offX, double offY){
+        g2d.setColor(Color.RED);
+
+        Coordinate innerSideStructureStart = new Coordinate(params.inner(),0);
+        Coordinate innerSideStructureEnd = new Coordinate(params.inner(), 5300);
+        Point innerSideDrawStart = worldToScreen(innerSideStructureStart,envelope,scale,offX,offY);
+        Point innerSideDrawEnd = worldToScreen(innerSideStructureEnd,envelope,scale,offX,offY);
+
+        g2d.drawLine(innerSideDrawStart.x , innerSideDrawStart.y, innerSideDrawEnd.x, innerSideDrawEnd.y);
+
+        Coordinate outSideStructureStart = new Coordinate(params.outer() * -1,0);
+        Coordinate outSideStructureEnd = new Coordinate(params.outer() * -1, 5300);
+        Point outSideDrawStart = worldToScreen(outSideStructureStart,envelope,scale,offX,offY);
+        Point outSideDrawEnd = worldToScreen(outSideStructureEnd,envelope,scale,offX,offY);
+
+        g2d.drawLine(outSideDrawStart.x , outSideDrawStart.y, outSideDrawEnd.x, outSideDrawEnd.y);
+
     }
 }

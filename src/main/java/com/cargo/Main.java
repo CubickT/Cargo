@@ -52,7 +52,7 @@ public class Main {
         }
 
 
-        MainFrame frame = new MainFrame(boundsPoly, cargoPoly, gapCoords, zones, info);
+        MainFrame frame = new MainFrame(result,zones, info);
         frame.setVisible(true);
 
     }
