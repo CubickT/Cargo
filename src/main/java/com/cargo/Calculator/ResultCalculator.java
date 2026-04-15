@@ -64,7 +64,7 @@ public class ResultCalculator {
         String keyB = "byDegreeVertical|" + heightIndexB;
         GapTableRow tableRowB = gapTable.get(keyB);
 
-        System.out.println("Степень - Н" + code + maxDegree[1] + maxDegree[2]);
+        System.out.println("Степень - Н" + maxDegree[1]  + maxDegree[0] + maxDegree[2]);
 //        System.out.println("Полуширина - " + widthH);  //2240
 //        System.out.println("Высота - " + heightH);     //2800
 //        System.out.println("Индекс высоты - " + heightIndexH);
@@ -74,8 +74,8 @@ public class ResultCalculator {
         double[] DXTop = tableRowT.getTopDX();
         double[] DXBottom = tableRowB.getBottomDX();
 
-        System.out.println("Верхние зазоры - " + Arrays.toString(DXTop));
-        System.out.println("Нижние зазоры - " + Arrays.toString(DXBottom));
+//        System.out.println("Верхние зазоры - " + Arrays.toString(DXTop));
+//        System.out.println("Нижние зазоры - " + Arrays.toString(DXBottom));
 
         Offsets offsets = calculateOffsets(radius, heightH, elevationOuter);
 
@@ -88,12 +88,12 @@ public class ResultCalculator {
         double[] minBottom = calculateMinDisNoOffset(heightB, negateArray(DXBottom));
         double[] minTop = calculateMinDisNoOffset(heightT,DXTop);
 
-        System.out.println("Верхние зазоры - " + Arrays.toString(minTop));
+        System.out.println("Верхние расстояния - " + Arrays.toString(minTop));
 
-        System.out.println("Внутренние зазоры - " + Arrays.toString(minInner));
-        System.out.println("Наружные зазоры - " + Arrays.toString(minOuter));
+        System.out.println("Внутренние расстояния - " + Arrays.toString(minInner));
+        System.out.println("Наружные расстояния - " + Arrays.toString(minOuter));
 
-        System.out.println("Нижние зазоры - " + Arrays.toString(minBottom));
+        System.out.println("Нижние расстояния - " + Arrays.toString(minBottom));
 
         int possibleMode = calculatePossibleMode(minInner, minOuter, innerDist, outerDist);
         boolean isPossible = possibleMode > 0;

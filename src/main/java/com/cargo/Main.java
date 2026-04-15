@@ -42,9 +42,9 @@ public class Main {
         String info = "";
 
         if (boundsPoly.contains(cargoPoly)) {
-            info += "Объект входит в габарит";
+            info += "Груз входит в габарит";
         } else {
-            info += "Объект не входит в габарит. Степень - ";
+            info += "Груз не входит в габарит. Н060";
         }
 
         Result result = calculator(cargo,bounds);
@@ -62,7 +62,7 @@ public class Main {
         System.out.println("Выберите груз");
         System.out.println("1 - Габаритный прямоугольник");
         System.out.println("2 - Негабаритный многоугольник");
-        System.out.println("3 - Груз из задачи");
+        System.out.println("3 - Груз из примера");
         System.out.println("4 - Проверка производительности");
 
         while (true) {

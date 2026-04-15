@@ -162,7 +162,6 @@ public class InitializationUtils {
 
             topZone.add(points.toArray(new Coordinate[0]));
         }
-        System.out.println("topZone size: " + topZone.size());
         return topZone;
     }
 
