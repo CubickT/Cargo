@@ -6,7 +6,7 @@ public enum DegreesTop {
     FIRST(1, 880, 5300),
     SECOND(2, 1020, 5300),
     THIRD(3, 1140, 5300),
-    OUT(7,0,0);
+    OUT(4,0,0);
 
     final int code;
     final double size;

@@ -9,7 +9,7 @@ public enum DegreesLower {
     FORTH(4, 2000,1230),
     FIFTH(5,2080,1230),
     SIXTH(6, 2240,1230),
-    OUT(4,0,0);
+    OUT(7,0,0);
 
     final int code;
     final double size;
