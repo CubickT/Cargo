@@ -36,7 +36,7 @@ public class Calculator {
 
         CalculationParameters params = read();
 
-        return finalCalculation(cargo, maxDegree, params, gapTable);
+        return finalCalculation(cargo, bounds, maxDegree, params, gapTable);
 
     }
 
