@@ -4,6 +4,7 @@ import com.cargo.IO.CalculationParameters;
 
 public record Result (
         ShapeModel cargo,
+        ShapeModel bounds,
         CalculationParameters params,
         int[] maxDegrees,
         int possibleMode,

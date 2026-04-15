@@ -15,7 +15,7 @@ import static com.cargo.util.Utils.*;
 
 public class ResultCalculator {
 
-    public static Result finalCalculation(ShapeModel cargo, int[] maxDegree, CalculationParameters params, Map<String, GapTableRow> gapTable) {
+    public static Result finalCalculation(ShapeModel cargo, ShapeModel bounds, int[] maxDegree, CalculationParameters params, Map<String, GapTableRow> gapTable) {
 
         DegreesSide degreeH = DegreesSide.fromCode(maxDegree[0]);
         DegreesTop degreeT = DegreesTop.fromCode(maxDegree[1]);
@@ -108,7 +108,7 @@ public class ResultCalculator {
 //        result.setPossibleMode(possibleMode);
 //        result.setIsPossible(isPossible);
         int[] maxDegrees = {maxDegree[1], maxDegree[0], maxDegree[2]};
-        return new Result(cargo, params, maxDegrees, possibleMode,minOuter,minInner,minBottom,minTop,isPossible);
+        return new Result(cargo, bounds, params, maxDegrees, possibleMode,minOuter,minInner,minBottom,minTop,isPossible);
 
     }
 
