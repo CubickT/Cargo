@@ -6,6 +6,7 @@ import com.cargo.data.DegreesSide;
 import com.cargo.data.DegreesTop;
 import com.cargo.data.GapTableRow;
 import com.cargo.model.Result;
+import com.cargo.model.ShapeModel;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -14,7 +15,7 @@ import static com.cargo.util.Utils.*;
 
 public class ResultCalculator {
 
-    public static Result finalCalculation(int[] maxDegree, CalculationParameters params, Map<String, GapTableRow> gapTable) {
+    public static Result finalCalculation(ShapeModel cargo, int[] maxDegree, CalculationParameters params, Map<String, GapTableRow> gapTable) {
 
         DegreesSide degreeH = DegreesSide.fromCode(maxDegree[0]);
         DegreesTop degreeT = DegreesTop.fromCode(maxDegree[1]);
@@ -99,15 +100,15 @@ public class ResultCalculator {
         boolean isPossible = possibleMode > 0;
         System.out.println("Допустимый режим хода - " + possibleMode);
 
-        Result result = new Result();
-        result.setMinPossibleInner(minInner);
-        result.setMinPossibleOuter(minOuter);
-        result.setMinPossibleBottom(minBottom);
-        result.setMinPossibleTop(minTop);
-        result.setPossibleMode(possibleMode);
-        result.setIsPossible(isPossible);
-
-        return result;
+//        Result result = new Result();
+//        result.setMinPossibleInner(minInner);
+//        result.setMinPossibleOuter(minOuter);
+//        result.setMinPossibleBottom(minBottom);
+//        result.setMinPossibleTop(minTop);
+//        result.setPossibleMode(possibleMode);
+//        result.setIsPossible(isPossible);
+        int[] maxDegrees = {maxDegree[1], maxDegree[0], maxDegree[2]};
+        return new Result(cargo, params, maxDegrees, possibleMode,minOuter,minInner,minBottom,minTop,isPossible);
 
     }
 

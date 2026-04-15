@@ -1,61 +1,15 @@
 package com.cargo.model;
 
-public class Result implements ResultInterface {
+import com.cargo.IO.CalculationParameters;
 
-    int possibleMode;
-    double[] minPossibleOuter;
-    double[] minPossibleInner;
-    double[] minPossibleBottom;
-    double[] minPossibleTop;
-    boolean isPossible;
-
-    @Override
-    public void setPossibleMode(int possibleMode) {
-        this.possibleMode = possibleMode;
-    }
-
-    @Override
-    public void setMinPossibleOuter(double[] minPossibleOuter) {
-        this.minPossibleOuter = minPossibleOuter;
-    }
-
-    @Override
-    public void setMinPossibleInner(double[] minPossibleInner) {
-        this.minPossibleInner = minPossibleInner;
-    }
-
-    @Override
-    public void setMinPossibleBottom(double[] minPossibleBottom) {
-        this.minPossibleBottom = minPossibleBottom;
-    }
-
-    @Override
-    public void setMinPossibleTop(double[] minPossibleTop) {
-        this.minPossibleTop = minPossibleTop;
-    }
-
-    @Override
-    public void setIsPossible(boolean isPossible) {
-        this.isPossible = isPossible;
-    }
-
-    @Override
-    public int getPossibleMode() {
-        return possibleMode;
-    }
-
-    @Override
-    public double[] getMinPossibleOuter() {
-        return minPossibleOuter;
-    }
-
-    @Override
-    public double[] getMinPossibleInner() {
-        return minPossibleInner;
-    }
-
-    @Override
-    public boolean getIsPossible() {
-        return isPossible;
-    }
-}
+public record Result (
+        ShapeModel cargo,
+        CalculationParameters params,
+        int[] maxDegrees,
+        int possibleMode,
+        double[] minPossibleOuter,
+        double[] minPossibleInner,
+        double[] minPossibleBottom,
+        double[] minPossibleTop,
+        boolean isPossible
+) {}
