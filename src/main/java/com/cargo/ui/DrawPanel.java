@@ -24,6 +24,8 @@ public class DrawPanel extends JPanel {
     private final Coordinate[][] gapCoords;
     private final ZoneModel[] zones;
 
+    private RenderContext context;
+
     public DrawPanel(Result result, ZoneModel[] zones) {
         this.params = result.params();
 
@@ -37,11 +39,28 @@ public class DrawPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+        context = calculateRenderContext(g2d);
 
+        drawSideStructure();
+
+        for (ZoneModel zone : zones) {
+            drawPolygon(zone.getPoly(), Color.LIGHT_GRAY);
+        }
+
+        drawPolygon(boundsPoly, Color.BLUE);
+        drawPolygon(cargoPoly, Color.BLACK);
+        drawGapLines(Color.RED);
+
+
+    }
+
+    private RenderContext calculateRenderContext(Graphics2D g2d){
         int panelWidth = getWidth();
         int panelHeight = getHeight();
 
+        assert boundsPoly != null;
         Envelope envelope = boundsPoly.getEnvelopeInternal();
+        assert cargoPoly != null;
         envelope.expandToInclude(cargoPoly.getEnvelopeInternal());
 
         double scaleX = (panelWidth - 2 * PADDING) / envelope.getWidth();
@@ -51,31 +70,19 @@ public class DrawPanel extends JPanel {
         double offsetX = PADDING + (panelWidth - 2 * PADDING - envelope.getWidth() * scale) / 2;
         double offsetY = PADDING + (panelHeight - 2 * PADDING - envelope.getHeight() * scale) / 2;
 
-
-        drawSideStructure(g2d, envelope,scale,offsetX,offsetY);
-
-        for (ZoneModel zone : zones) {
-            drawPolygon(g2d, zone.getPoly(), Color.LIGHT_GRAY, envelope, scale, offsetX, offsetY);
-        }
-
-        drawPolygon(g2d, boundsPoly, Color.BLUE, envelope, scale, offsetX, offsetY);
-        drawPolygon(g2d, cargoPoly, Color.BLACK, envelope, scale, offsetX, offsetY);
-        drawGapLines(g2d, Color.RED, envelope, scale, offsetX, offsetY);
-
-
+        return new RenderContext(g2d, envelope, scale,offsetX,offsetY);
     }
 
 
-    private Point worldToScreen(Coordinate coord, Envelope envelope, double scale, double offX, double offY) {
-        int x = (int) Math.round(offX + (coord.x - envelope.getMinX()) * scale);
-        int y = (int) Math.round(offY + (envelope.getMaxY() - coord.y) * scale);
+    private Point worldToScreen(Coordinate coord) {
+        int x = (int) Math.round(context.offX + (coord.x - context.envelope.getMinX()) * context.scale);
+        int y = (int) Math.round(context.offY + (context.envelope.getMaxY() - coord.y) * context.scale);
 
         return new Point(x, y);
     }
 
-
-    private void drawPolygon(Graphics2D g2d, Polygon poly, Color color, Envelope envelope, double scale, double offX, double offY) {
-        g2d.setColor(color);
+    private void drawPolygon(Polygon poly, Color color) {
+        context.g2d.setColor(color);
 
         Coordinate[] coords = poly.getCoordinates();
         int n = coords.length;
@@ -83,51 +90,67 @@ public class DrawPanel extends JPanel {
         int[] yPoints = new int[n];
 
         for (int i = 0; i < n; i++) {
-            Point p = worldToScreen(coords[i], envelope, scale, offX, offY);
+            Point p = worldToScreen(coords[i]);
             xPoints[i] = p.x;
             yPoints[i] = p.y;
         }
-        g2d.drawPolygon(xPoints, yPoints, n);
+        context.g2d.drawPolygon(xPoints, yPoints, n);
     }
 
-    private void drawGapLines(Graphics2D g2d, Color color, Envelope envelope, double scale, double offX, double offY) {
-        g2d.setColor(color);
+    private void drawGapLines(Color color) {
+        context.g2d.setColor(color);
 
         Coordinate[] coords = coordsOut(cargoPoly.getCoordinates(), boundsPoly);
 
         for (int i = 0; i < gapCoords.length; i++) {
             if (coords[i] != null) {
-                Point start = worldToScreen(coords[i], envelope, scale, offX, offY);
+                Point start = worldToScreen(coords[i]);
 
                 if (gapCoords[i][0] != null) {
-                    Point endX = worldToScreen(gapCoords[i][0], envelope, scale, offX, offY);
-                    g2d.drawLine(start.x, start.y, endX.x, endX.y);
+                    Point endX = worldToScreen(gapCoords[i][0]);
+                    context.g2d.drawLine(start.x, start.y, endX.x, endX.y);
                 }
 
                 if (gapCoords[i][1] != null) {
-                    Point endY = worldToScreen(gapCoords[i][1], envelope, scale, offX, offY);
-                    g2d.drawLine(start.x, start.y, endY.x, endY.y);
+                    Point endY = worldToScreen(gapCoords[i][1]);
+                    context.g2d.drawLine(start.x, start.y, endY.x, endY.y);
                 }
             }
         }
     }
 
-    private void drawSideStructure(Graphics2D g2d, Envelope envelope, double scale, double offX, double offY){
-        g2d.setColor(Color.RED);
+    private void drawSideStructure(){
+        context.g2d.setColor(Color.RED);
 
         Coordinate innerSideStructureStart = new Coordinate(params.inner(),0);
         Coordinate innerSideStructureEnd = new Coordinate(params.inner(), 5300);
-        Point innerSideDrawStart = worldToScreen(innerSideStructureStart,envelope,scale,offX,offY);
-        Point innerSideDrawEnd = worldToScreen(innerSideStructureEnd,envelope,scale,offX,offY);
+        Point innerSideDrawStart = worldToScreen(innerSideStructureStart);
+        Point innerSideDrawEnd = worldToScreen(innerSideStructureEnd);
 
-        g2d.drawLine(innerSideDrawStart.x , innerSideDrawStart.y, innerSideDrawEnd.x, innerSideDrawEnd.y);
+        context.g2d.drawLine(innerSideDrawStart.x , innerSideDrawStart.y, innerSideDrawEnd.x, innerSideDrawEnd.y);
 
         Coordinate outSideStructureStart = new Coordinate(params.outer() * -1,0);
         Coordinate outSideStructureEnd = new Coordinate(params.outer() * -1, 5300);
-        Point outSideDrawStart = worldToScreen(outSideStructureStart,envelope,scale,offX,offY);
-        Point outSideDrawEnd = worldToScreen(outSideStructureEnd,envelope,scale,offX,offY);
+        Point outSideDrawStart = worldToScreen(outSideStructureStart);
+        Point outSideDrawEnd = worldToScreen(outSideStructureEnd);
 
-        g2d.drawLine(outSideDrawStart.x , outSideDrawStart.y, outSideDrawEnd.x, outSideDrawEnd.y);
+        context.g2d.drawLine(outSideDrawStart.x , outSideDrawStart.y, outSideDrawEnd.x, outSideDrawEnd.y);
 
+    }
+
+    private static class RenderContext{
+        Graphics2D g2d;
+        Envelope envelope;
+        double scale;
+        double offX;
+        double offY;
+
+        public RenderContext(Graphics2D g2d, Envelope envelope,double scale,double offX,double offY){
+            this.g2d = g2d;
+            this.envelope = envelope;
+            this.scale = scale;
+            this.offX = offX;
+            this.offY = offY;
+        }
     }
 }
