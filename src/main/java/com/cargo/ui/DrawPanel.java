@@ -18,6 +18,7 @@ public class DrawPanel extends JPanel {
     static double PADDING = 30;
 
     private final CalculationParameters params;
+    private final Result result;
 
     private final Polygon cargoPoly;
     private final Polygon boundsPoly;
@@ -27,11 +28,13 @@ public class DrawPanel extends JPanel {
     private RenderContext context;
 
     public DrawPanel(Result result, ZoneModel[] zones) {
+        this.result = result;
         this.params = result.params();
 
         this.boundsPoly = result.bounds().getPoly();
         this.cargoPoly = result.cargo().getPoly();
-        this.gapCoords = gapCoords(result.cargo().getCoords(),boundsPoly);
+        this.gapCoords = gapCoords(result.cargo().getCoords(), boundsPoly);
+
         this.zones = zones;
     }
 
@@ -51,10 +54,18 @@ public class DrawPanel extends JPanel {
         drawPolygon(cargoPoly, Color.BLACK);
         drawGapLines(Color.RED);
 
+        for (double side : result.minPossibleInner()) {
+            drawSideAllowed(side, 1);
+        }
+
+        for (double side : result.minPossibleOuter()) {
+            drawSideAllowed(side, -1);
+        }
+
 
     }
 
-    private RenderContext calculateRenderContext(Graphics2D g2d){
+    private RenderContext calculateRenderContext(Graphics2D g2d) {
         int panelWidth = getWidth();
         int panelHeight = getHeight();
 
@@ -70,7 +81,7 @@ public class DrawPanel extends JPanel {
         double offsetX = PADDING + (panelWidth - 2 * PADDING - envelope.getWidth() * scale) / 2;
         double offsetY = PADDING + (panelHeight - 2 * PADDING - envelope.getHeight() * scale) / 2;
 
-        return new RenderContext(g2d, envelope, scale,offsetX,offsetY);
+        return new RenderContext(g2d, envelope, scale, offsetX, offsetY);
     }
 
 
@@ -119,33 +130,49 @@ public class DrawPanel extends JPanel {
         }
     }
 
-    private void drawSideStructure(){
+    private void drawSideStructure() {
         context.g2d.setColor(Color.RED);
 
-        Coordinate innerSideStructureStart = new Coordinate(params.inner(),0);
+        Coordinate innerSideStructureStart = new Coordinate(params.inner(), 0);
         Coordinate innerSideStructureEnd = new Coordinate(params.inner(), 5300);
         Point innerSideDrawStart = worldToScreen(innerSideStructureStart);
         Point innerSideDrawEnd = worldToScreen(innerSideStructureEnd);
 
-        context.g2d.drawLine(innerSideDrawStart.x , innerSideDrawStart.y, innerSideDrawEnd.x, innerSideDrawEnd.y);
+        context.g2d.drawLine(innerSideDrawStart.x, innerSideDrawStart.y, innerSideDrawEnd.x, innerSideDrawEnd.y);
 
-        Coordinate outSideStructureStart = new Coordinate(params.outer() * -1,0);
+        Coordinate outSideStructureStart = new Coordinate(params.outer() * -1, 0);
         Coordinate outSideStructureEnd = new Coordinate(params.outer() * -1, 5300);
         Point outSideDrawStart = worldToScreen(outSideStructureStart);
         Point outSideDrawEnd = worldToScreen(outSideStructureEnd);
 
-        context.g2d.drawLine(outSideDrawStart.x , outSideDrawStart.y, outSideDrawEnd.x, outSideDrawEnd.y);
+        context.g2d.drawLine(outSideDrawStart.x, outSideDrawStart.y, outSideDrawEnd.x, outSideDrawEnd.y);
 
     }
 
-    private static class RenderContext{
+    private void drawSideAllowed(double side, int sign) {
+        double BOTTOM = 2000;
+        double TOP = 3000;
+
+        assert sign == 1 || sign == -1: "sign должен быть 1 или -1, получено: " + sign;
+
+
+        Coordinate start = new Coordinate(sign * side, BOTTOM);
+        Coordinate end = new Coordinate(sign * side, TOP);
+        Point dStart = worldToScreen(start);
+        Point dEnd = worldToScreen(end);
+
+        context.g2d.setColor(Color.GREEN);
+        context.g2d.drawLine(dStart.x, dStart.y, dEnd.x, dEnd.y);
+    }
+
+    private static class RenderContext {
         Graphics2D g2d;
         Envelope envelope;
         double scale;
         double offX;
         double offY;
 
-        public RenderContext(Graphics2D g2d, Envelope envelope,double scale,double offX,double offY){
+        public RenderContext(Graphics2D g2d, Envelope envelope, double scale, double offX, double offY) {
             this.g2d = g2d;
             this.envelope = envelope;
             this.scale = scale;
