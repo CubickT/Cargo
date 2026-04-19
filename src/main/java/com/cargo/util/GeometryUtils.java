@@ -8,6 +8,10 @@ import static java.lang.Math.abs;
 
 public class GeometryUtils {
 
+    private static final int SIDE = 0;
+    private static final int TOP =  1;
+    private static final int BOTTOM = 2;
+
     public static Coordinate[] coordsOut(Coordinate[] coordsIn, Polygon boundsPoly) {
         Point[] points =
                 toPoints(coordsIn);
@@ -111,40 +115,30 @@ public class GeometryUtils {
     public static int[][] calculateDegree(Coordinate[] coordsIn, ZoneModel[] zones, ShapeModel bounds) {
 
         Point[] pointsIn = toPoints(coordsIn);
-        Polygon boundsPoly = bounds.getPoly();
-
-        Polygon[] zonePolies = new Polygon[zones.length];
         int[][] result = new int[coordsIn.length][3];
-
-
-        for (int i = 0; i < zones.length; i++) {
-            zonePolies[i] = zones[i].getPoly();
-        }
 
         for (int j = 0; j < coordsIn.length; j++) {
             boolean foundInZone = false;
 
-
-            for (int i = 0; i < zones.length; i++) {
-                if (zonePolies[i].contains(pointsIn[j])) {
-                    result[j][0] = zones[i].getDegreeH();
-                    result[j][1] = zones[i].getDegreeT();
-                    result[j][2] = zones[i].getDegreeB();
+            for (ZoneModel zone : zones) {
+                if (zone.contains(pointsIn[j])) {
+                    result[j][SIDE] = zone.getDegreeH();
+                    result[j][TOP] = zone.getDegreeT();
+                    result[j][BOTTOM] = zone.getDegreeB();
                     foundInZone = true;
                     break;
                 }
             }
 
             if (!foundInZone) {
-                if (boundsPoly.contains(pointsIn[j])) {
-                    result[j][0] = 0;
-                    result[j][1] = 0;
-                    result[j][2] = 0;
+                if (bounds.contains(pointsIn[j])) {
+                    result[j][SIDE] = 0;
+                    result[j][TOP] = 0;
+                    result[j][BOTTOM] = 0;
                 } else {
-
-                    result[j][0] = 7;
-                    result[j][1] = 4;
-                    result[j][2] = 4;
+                    result[j][SIDE] = 7;
+                    result[j][TOP] = 4;
+                    result[j][BOTTOM] = 7;
                 }
             }
         }
