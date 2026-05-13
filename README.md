@@ -19,7 +19,7 @@
 ## Технологии
 
  - Java
- - Maven
- - JTS
- - Jackson
+ - [Maven](https://github.com/apache/maven)
+ - [JTS](https://github.com/locationtech/jts)
+ - [Jackson](https://github.com/FasterXML/jackson)
 
