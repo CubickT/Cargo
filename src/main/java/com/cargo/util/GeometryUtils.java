@@ -9,7 +9,7 @@ import static java.lang.Math.abs;
 public class GeometryUtils {
 
     private static final int SIDE = 0;
-    private static final int TOP =  1;
+    private static final int TOP = 1;
     private static final int BOTTOM = 2;
 
     public static Coordinate[] coordsOut(Coordinate[] coordsIn, Polygon boundsPoly) {
@@ -151,11 +151,11 @@ public class GeometryUtils {
             throw new IllegalArgumentException("numPoints должно быть не меньше 2");
         }
         double[][] points = new double[numPoints][2];
-        double angleStep = 2 * Math.PI / (numPoints - 1); // шаг для замыкания окружности
+        double angleStep = 2 * Math.PI / (numPoints - 1);
         for (int i = 0; i < numPoints; i++) {
             double angle = i * angleStep;
-            points[i][0] = radius * Math.cos(angle);          // x без смещения
-            points[i][1] = radius * Math.sin(angle) + yOffset; // y со смещением
+            points[i][0] = radius * Math.cos(angle);
+            points[i][1] = radius * Math.sin(angle) + yOffset;
         }
         return points;
 
