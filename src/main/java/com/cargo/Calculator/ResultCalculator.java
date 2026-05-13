@@ -21,14 +21,6 @@ public class ResultCalculator {
         DegreesTop degreeT = DegreesTop.fromCode(maxDegree[1]);
         DegreesLower degreeB = DegreesLower.fromCode(maxDegree[2]);
 
-        int code = degreeH.getCode();
-
-//        if (code == 0) {
-//            System.out.println("Груз габаритен");
-//        } else if (code == 7) {
-//            System.out.println("Груз абсолютно негабаритен");
-//        }
-
         double radius = params.radius();
         double elevationOuter = params.elevationOuter();
 
@@ -100,13 +92,6 @@ public class ResultCalculator {
         boolean isPossible = possibleMode > 0;
         System.out.println("Допустимый режим хода - " + possibleMode);
 
-//        Result result = new Result();
-//        result.setMinPossibleInner(minInner);
-//        result.setMinPossibleOuter(minOuter);
-//        result.setMinPossibleBottom(minBottom);
-//        result.setMinPossibleTop(minTop);
-//        result.setPossibleMode(possibleMode);
-//        result.setIsPossible(isPossible);
         int[] maxDegrees = {maxDegree[1], maxDegree[0], maxDegree[2]};
         return new Result(cargo, bounds, params, maxDegrees, possibleMode,minOuter,minInner,minBottom,minTop,isPossible);
 
